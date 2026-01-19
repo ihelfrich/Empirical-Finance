@@ -1,0 +1,198 @@
+%!TEX program = xelatex
+\documentclass[10pt]{beamer}
+
+% Theme
+\usetheme[progressbar=frametitle]{metropolis}
+\usepackage{appendixnumberbeamer}
+
+% Color palette (RA-inspired, finance-leaning)
+\definecolor{StudyBlue}{HTML}{2E86C1}
+\definecolor{StudyTeal}{HTML}{17A2B8}
+\definecolor{StudyGrey}{HTML}{495057}
+\definecolor{StudyLight}{HTML}{F8F9FA}
+\definecolor{StudyGold}{HTML}{B8860B}
+
+\setbeamercolor{primary}{bg=StudyBlue}
+\setbeamercolor{secondary}{bg=StudyGrey}
+\setbeamercolor{accent}{bg=StudyTeal}
+\setbeamercolor{frametitle}{bg=StudyBlue, fg=white}
+\setbeamercolor{progress bar}{fg=StudyTeal, bg=StudyGrey}
+
+% Font sizing
+\setbeamerfont{normal text}{size=\footnotesize}
+\setbeamerfont{structure}{size=\footnotesize}
+\setbeamerfont{frametitle}{size=\large}
+\setbeamerfont{framesubtitle}{size=\scriptsize}
+
+% Packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+\usepackage{bookmark}
+
+% tcolorbox setup
+\tcbuselibrary{theorems,skins}
+
+% Spacing
+\setlength{\parskip}{2pt}
+\setlength{\itemsep}{1pt}
+
+% Bullet styles
+\setbeamercolor{item}{fg=StudyBlue}
+\setbeamercolor{subitem}{fg=StudyBlue}
+\setbeamercolor{subsubitem}{fg=StudyBlue}
+\setbeamertemplate{itemize item}{\normalsize$\bullet$}
+\setbeamertemplate{itemize subitem}{\large$\circ$}
+\setbeamertemplate{itemize subsubitem}{\Large$\diamond$}
+
+\setbeamercolor{enumerate item}{fg=StudyBlue}
+\setbeamercolor{enumerate subitem}{fg=StudyBlue}
+\setbeamercolor{enumerate subsubitem}{fg=StudyBlue}
+\setbeamertemplate{enumerate item}{\textbf{\arabic{enumi}.}}
+\setbeamertemplate{enumerate subitem}{\textbf{\alph{enumii})}}
+\setbeamertemplate{enumerate subsubitem}{\textbf{\roman{enumiii}.}}
+
+% Math shortcuts
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+
+% Box styles
+\newtcolorbox{roundedbox}{
+    colback=StudyBlue!5,
+    colframe=StudyBlue!80,
+    rounded corners,
+    fonttitle=\bfseries
+}
+
+\newtcolorbox{definitionbox}[1][]{
+    colback=StudyBlue!5,
+    colframe=StudyBlue!80,
+    fonttitle=\bfseries,
+    title=Definition,
+    before upper={
+        \setbeamercolor{itemize item}{fg=StudyBlue}
+        \setbeamercolor{itemize subitem}{fg=StudyBlue}
+        \setbeamercolor{itemize subsubitem}{fg=StudyBlue}
+    },
+    #1
+}
+
+\newtcolorbox{theorembox}[1][]{
+    colback=StudyTeal!5,
+    colframe=StudyTeal!80,
+    fonttitle=\bfseries,
+    title=Theorem,
+    before upper={
+        \setbeamercolor{itemize item}{fg=StudyTeal}
+        \setbeamercolor{itemize subitem}{fg=StudyTeal}
+        \setbeamercolor{itemize subsubitem}{fg=StudyTeal}
+    },
+    #1
+}
+
+\newtcolorbox{examplebox}[1][]{
+    colback=StudyGrey!5,
+    colframe=StudyGrey!80,
+    fonttitle=\bfseries,
+    title=Example,
+    before upper={
+        \setbeamercolor{itemize item}{fg=StudyGrey}
+        \setbeamercolor{itemize subitem}{fg=StudyGrey}
+        \setbeamercolor{itemize subsubitem}{fg=StudyGrey}
+    },
+    #1
+}
+
+\newtcolorbox{notebox}[1][]{
+    colback=black!5,
+    colframe=black!90,
+    fonttitle=\bfseries,
+    fontupper=\footnotesize,
+    title=Intuition,
+    before upper={
+        \setbeamercolor{itemize item}{fg=black}
+        \setbeamercolor{itemize subitem}{fg=black}
+        \setbeamercolor{itemize subsubitem}{fg=black}
+    },
+    #1
+}
+
+\newtcolorbox{proofbox}[1][]{
+    colback=StudyLight,
+    colframe=StudyGrey!50,
+    fonttitle=\bfseries,
+    title=Proof,
+    before upper={
+        \setbeamercolor{itemize item}{fg=StudyGrey}
+        \setbeamercolor{itemize subitem}{fg=StudyGrey}
+        \setbeamercolor{itemize subsubitem}{fg=StudyGrey}
+    },
+    #1
+}
+
+\newtcolorbox{keypoint}[1][]{
+    colback=yellow!10,
+    colframe=orange!80,
+    fonttitle=\bfseries,
+    title=Key Point,
+    before upper={
+        \setbeamercolor{itemize item}{fg=orange}
+        \setbeamercolor{itemize subitem}{fg=orange}
+        \setbeamercolor{itemize subsubitem}{fg=orange}
+    },
+    #1
+}
+
+\newtcolorbox{problembox}[1][]{
+    colback=StudyGold!10,
+    colframe=StudyGold!90,
+    fonttitle=\bfseries,
+    title=Problem,
+    before upper={
+        \setbeamercolor{itemize item}{fg=StudyGold}
+        \setbeamercolor{itemize subitem}{fg=StudyGold}
+        \setbeamercolor{itemize subsubitem}{fg=StudyGold}
+    },
+    #1
+}
+
+\title{Empirical Asset Pricing: Qualifier Prep}
+\subtitle{Module Template}
+\author{Empirical Finance}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% Roadmap template
+\begin{frame}{Roadmap}
+\small
+\begin{enumerate}
+\item \textbf{Problem Setup}
+\begin{itemize}
+\item What is given, what is asked
+\item Key assumptions and notation
+\end{itemize}
+\item \textbf{Main Derivation}
+\begin{itemize}
+\item Step-by-step solution
+\item Intermediate algebra shown
+\end{itemize}
+\item \textbf{Interpretation and Practice}
+\begin{itemize}
+\item Economic meaning
+\item Practice variant and pitfalls
+\end{itemize}
+\end{enumerate}
+\end{frame}
+
+\end{document}

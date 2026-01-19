@@ -1,0 +1,5 @@
+# Private local materials
+PRIVATE/
+
+# OS cruft
+.DS_Store
