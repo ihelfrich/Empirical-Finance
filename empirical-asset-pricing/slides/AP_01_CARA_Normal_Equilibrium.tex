@@ -166,12 +166,52 @@
 
 \title{Empirical Asset Pricing}
 \subtitle{AP-01: CARA/Normal Equilibrium Pricing}
-\author{Dr. Ian Helfrich\\University of Maryland}
+\author{Dr. Ian Helfrich}
 \date{\today}
 
 \begin{document}
 
 \maketitle
+
+\begin{frame}{From the Instructor}
+\small
+\begin{notebox}[title=A Quick Note]
+\begin{itemize}
+\item These are my own qualifier prep notes, written in full sentences on purpose.
+\item I am an independent researcher (Georgia Tech PhD) and I have no current affiliation.
+\item If a step feels fast, slow it down and work it line-by-line with me.
+\end{itemize}
+\end{notebox}
+\end{frame}
+
+\begin{frame}{Why This Problem Matters}
+\small
+\begin{roundedbox}
+\textbf{Qualifier DNA}
+\begin{itemize}
+\item This is the canonical CARA/Normal equilibrium question.
+\item It tests whether you can move from preferences to prices, fast and clean.
+\item The same logic shows up in factor models, mean-variance, and SDF work.
+\end{itemize}
+\end{roundedbox}
+\vspace{0.2cm}
+\textbf{Goal for today:} you should be able to derive the price and the risk-free rate on a blank sheet, without looking anything up.
+\end{frame}
+
+\begin{frame}{What You Are Being Asked to Produce}
+\small
+\begin{problembox}[title=Deliverables]
+\begin{itemize}
+\item A demand function for each investor $h$.
+\item A market-clearing price vector $p$.
+\item A clear interpretation of the risk adjustment term.
+\item A closed-form $R_f$ under common $\delta$, and the adjustment when $\delta_h$ differ.
+\end{itemize}
+\end{problembox}
+\begin{notebox}[title=Exam Tip]
+Write your final price as $p = \frac{1}{R_f}(\mu - \alpha\Sigma\theta)$ and then explain each term in one sentence. That earns partial credit even if algebra above is messy.
+\end{notebox}
+\end{frame}
 
 \begin{frame}{Roadmap}
 \small
@@ -242,6 +282,22 @@ $u_0(c)=-e^{-\alpha_h c}, \quad u_1(c)=-\delta_h e^{-\alpha_h c}.$
 \textbf{Note:} I will keep all vectors as column vectors, and I will write every transpose.
 \end{frame}
 
+\begin{frame}{Equilibrium Conditions (Keep These Visible)}
+\small
+\begin{roundedbox}
+\textbf{Market Clearing}
+\begin{itemize}
+\item Risky assets: $\sum_{h=1}^H \theta_h = \theta$.
+\item Risk-free asset: $\sum_{h=1}^H B_h = 0$.
+\item Date-0 goods: $\sum_{h=1}^H c_{0h} = c_0$.
+\end{itemize}
+\end{roundedbox}
+\vspace{0.2cm}
+\begin{notebox}[title=Why this matters]
+Every equilibrium price comes from these three conditions plus the FOCs.
+\end{notebox}
+\end{frame}
+
 \begin{frame}{Timeline (Two-Date Economy)}
 \small
 \begin{center}
@@ -275,6 +331,24 @@ $\E[-e^{-\alpha Y}]$ is equivalent to maximizing
 \item This lemma is the workhorse for the rest of the course.
 \end{itemize}
 \end{proofbox}
+\end{frame}
+
+\begin{frame}{Lemma in Full (Line-by-Line)}
+\small
+\begin{proofbox}[title=Full Derivation]
+\begin{align*}
+\E[-e^{-\alpha Y}] &= -\E\left[\exp(-\alpha Y)\right] \\
+&= -\exp\left(-\alpha m + \frac{\alpha^2}{2}v\right) \\
+&\text{(normal MGF)}.
+\end{align*}
+Maximizing this is equivalent to maximizing
+\[-\alpha m + \tfrac{\alpha^2}{2}v\]
+which is equivalent to maximizing
+\[m - \tfrac{\alpha}{2}v.\]
+\end{proofbox}
+\begin{notebox}[title=Practical Note]
+If you memorize one formula from this course, make it this one.
+\end{notebox}
 \end{frame}
 
 \begin{frame}{Step 1: Express $c_{1h}$ in Terms of $\theta_h$}
@@ -340,6 +414,23 @@ Demand is linear in expected excess payoff and inversely proportional to risk av
 \end{keypoint}
 \end{frame}
 
+\begin{frame}{Sanity Check: Shapes and Units}
+\small
+\begin{roundedbox}
+\textbf{Dimensions}
+\begin{itemize}
+\item $\mu$ and $p$ are $n \times 1$ vectors.
+\item $\Sigma$ is $n \times n$.
+\item $\theta_h$ is $n \times 1$.
+\item Therefore $\Sigma\theta_h$ is $n \times 1$, matching $\mu - R_f p$.
+\end{itemize}
+\end{roundedbox}
+\vspace{0.2cm}
+\begin{notebox}[title=Why I check this]
+On quals, a quick dimension check catches half of algebra mistakes.
+\end{notebox}
+\end{frame}
+
 \begin{frame}{Step 6: Market Clearing}
 \small
 \textbf{Aggregate supply:}
@@ -368,6 +459,34 @@ where $\alpha = 1/T$ is aggregate risk aversion.
 \end{keypoint}
 \end{frame}
 
+\begin{frame}{Notation Pitfall: Aggregate Risk Aversion}
+\small
+\begin{notebox}[title=Be Precise]
+Some notes define
+\[T = \sum_h \frac{1}{\alpha_h} \quad \text{and} \quad \alpha = \frac{1}{T}.\]
+Other notes (and some exams) write $\alpha = \sum_h \alpha_h$.\\
+\textbf{Always check the definition in the problem statement.}
+Your algebra is right either way, but the symbol may differ.
+\end{notebox}
+\end{frame}
+
+\begin{frame}{One-Asset Sanity Check}
+\small
+Assume $n=1$, so $\Sigma=\sigma^2$ and supply is $\theta$.
+\begin{align*}
+p &= \frac{1}{R_f}(\mu - \alpha\sigma^2\theta).
+\end{align*}
+\textbf{Interpretation:}
+\begin{itemize}
+\item Higher $\mu$ raises price.
+\item Higher risk ($\sigma^2$) lowers price.
+\item More supply $\theta$ lowers price (risk must be absorbed).
+\end{itemize}
+\begin{notebox}[title=Exam Tip]
+If your formula fails this one-asset check, something went wrong upstream.
+\end{notebox}
+\end{frame}
+
 \begin{frame}{Interpretation: The Risk Adjustment Term}
 \small
 \textbf{Price decomposition:}
@@ -375,7 +494,7 @@ where $\alpha = 1/T$ is aggregate risk aversion.
 \begin{notebox}[title=Economic Meaning]
 \begin{itemize}
 \item $\mu$ is the expected payoff.
-\item $\Sigma\theta$ is the covariance of each asset payoff with the aggregate payoff.
+\item $(\Sigma\theta)_i = \Cov(X_i,\theta'X)$ is each asset's covariance with aggregate risk.
 \item Larger covariance $\Rightarrow$ larger discount $\Rightarrow$ lower price.
 \end{itemize}
 \end{notebox}
@@ -393,6 +512,20 @@ Assume $\delta_h=\delta$ for all $h$.
 \[\frac{1}{R_f}=\E[m].\]
 \end{frame}
 
+\begin{frame}{Risk-Free Rate: Identify Mean and Variance}
+\small
+Let $c_1 = \theta'X$.
+Since $X \sim N(\mu,\Sigma)$, we have
+\begin{align*}
+\E[c_1] &= \theta'\mu, \\\\
+\Var(c_1) &= \theta'\Sigma\theta.
+\end{align*}
+Therefore $c_1 \sim N(\theta'\mu,\theta'\Sigma\theta)$.
+\begin{notebox}[title=Why this matters]
+We need the mean and variance to apply the normal MGF.
+\end{notebox}
+\end{frame}
+
 \begin{frame}{Risk-Free Rate: Step-by-Step Evaluation}
 \small
 Since $c_1=\theta'X$ and $X \sim N(\mu,\Sigma)$:
@@ -403,6 +536,19 @@ Since $c_1=\theta'X$ and $X \sim N(\mu,\Sigma)$:
 \end{align*}
 Therefore:
 \[R_f=\frac{1}{\delta}\exp\left(\alpha\theta'\mu-\alpha c_0-\tfrac{\alpha^2}{2}\theta'\Sigma\theta\right).\]
+\end{frame}
+
+\begin{frame}{Risk-Free Rate: Two Quick Checks}
+\small
+\begin{examplebox}[title=Check 1: No Aggregate Risk]
+If $\theta=0$, then $c_1$ is non-random and
+\[R_f = \frac{1}{\delta} e^{-\alpha c_0}.\]
+This is exactly the CARA discounting of certain consumption.
+\end{examplebox}
+\vspace{0.2cm}
+\begin{examplebox}[title=Check 2: More Aggregate Risk]
+If $\theta'\Sigma\theta$ rises, $R_f$ falls. Safe claims become more valuable.
+\end{examplebox}
 \end{frame}
 
 \begin{frame}{Comparative Statics for $R_f$}
@@ -439,7 +585,25 @@ When $\delta_h$ differ, a representative discount factor is a
 \textbf{Solve:}
 \begin{align*}
  c_{0h} &= -\frac{1}{\alpha_h}\ln\left(\frac{\Lambda_0}{\lambda_h\alpha_h}\right), \\
- c_{1h}(\omega) &= -\frac{1}{\alpha_h}\ln\left(\frac{\Lambda_1(\omega)}{\lambda_h\delta_h\alpha_h}\right).
+c_{1h}(\omega) &= -\frac{1}{\alpha_h}\ln\left(\frac{\Lambda_1(\omega)}{\lambda_h\delta_h\alpha_h}\right).
+\end{align*}
+\end{frame}
+
+\begin{frame}{Solve for Multipliers (Step-by-Step)}
+\small
+Let $T = \sum_h 1/\alpha_h$ and define
+\[K_0 = \sum_h \frac{1}{\alpha_h} \ln(\lambda_h\alpha_h).\]
+Summing $c_{0h}$ over $h$ gives
+\begin{align*}
+c_0 &= -T\ln\Lambda_0 + K_0, \\\\
+\ln\Lambda_0 &= \frac{K_0 - c_0}{T}.
+\end{align*}
+Define
+\[K_1 = \sum_h \frac{1}{\alpha_h} \ln(\lambda_h\delta_h\alpha_h).\]
+Then
+\begin{align*}
+c_1(\omega) &= -T\ln\Lambda_1(\omega) + K_1, \\\\
+\ln\Lambda_1(\omega) &= \frac{K_1 - c_1(\omega)}{T}.
 \end{align*}
 \end{frame}
 
@@ -451,6 +615,17 @@ Then the SDF is
 \[m(\omega)=\bar{\delta}\exp\{-\alpha(c_1(\omega)-c_0)\}.\]
 \textbf{Risk-free rate:}
 \[R_f=\frac{1}{\bar{\delta}}\exp\left(\alpha\theta'\mu-\alpha c_0-\tfrac{\alpha^2}{2}\theta'\Sigma\theta\right).\]
+\end{frame}
+
+\begin{frame}{Interpretation of $\bar{\delta}$}
+\small
+\begin{notebox}[title=Economic Meaning]
+\begin{itemize}
+\item Investors with lower risk aversion receive more weight.
+\item $\bar{\delta}$ is a geometric mean, not an arithmetic mean.
+\item If all $\delta_h$ are equal, $\bar{\delta} = \delta$.
+\end{itemize}
+\end{notebox}
 \end{frame}
 
 \begin{frame}{Key Takeaways}
