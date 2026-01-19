@@ -166,7 +166,7 @@
 
 \title{Empirical Asset Pricing}
 \subtitle{AP-01: CARA/Normal Equilibrium Pricing}
-\author{Empirical Finance Qualifier Prep}
+\author{Dr. Ian Helfrich\\University of Maryland}
 \date{\today}
 
 \begin{document}
@@ -178,20 +178,31 @@
 \begin{enumerate}
 \item \textbf{Problem and Setup}
 \begin{itemize}
-\item What is given, what is asked
-\item Notation and market structure
+\item What is given, what is asked, and what we can safely ignore
+\item Notation and market structure, kept consistent throughout
 \end{itemize}
 \item \textbf{Derivation}
 \begin{itemize}
-\item CARA/Normal certainty equivalent
-\item Individual demand, market clearing, equilibrium price
+\item CARA/Normal certainty equivalent (the only real trick)
+\item Individual demand, market clearing, and equilibrium price
 \end{itemize}
 \item \textbf{Risk-Free Rate and Interpretation}
 \begin{itemize}
 \item Common vs heterogeneous discounting
-\item Economic meaning and exam tips
+\item Economic meaning, plus the exact exam tips I use
 \end{itemize}
 \end{enumerate}
+\end{frame}
+
+\begin{frame}{How to Use These Notes}
+\small
+\begin{notebox}[title=Reading Advice]
+\begin{itemize}
+\item I go line-by-line. If a step feels quick, stop and check the algebra.
+\item Every definition used later is stated here once. Use it as a reference.
+\item The goal is not just the formula, but knowing why it must look that way.
+\end{itemize}
+\end{notebox}
 \end{frame}
 
 \begin{frame}{Qualifier Problem (BMGT840 Final 2024 Q1)}
@@ -200,7 +211,7 @@
 \begin{itemize}
 \item Two dates, risky payoffs $X \sim N(\mu, \Sigma)$, supply $\theta$.
 \item $H$ investors with CARA utilities
-\[4pt]
+\vspace{4pt}
 $u_0(c)=-e^{-\alpha_h c}, \quad u_1(c)=-\delta_h e^{-\alpha_h c}.$
 \item Show: $p = \frac{1}{R_f}(\mu - \alpha\,\Sigma\theta)$.
 \item Interpret the risk adjustment term.
@@ -227,6 +238,8 @@ $u_0(c)=-e^{-\alpha_h c}, \quad u_1(c)=-\delta_h e^{-\alpha_h c}.$
 \item Date-0 budget: $c_{0h}+p'\theta_h+(1/R_f)B_h=w_{0h}$.
 \item Date-1 consumption: $c_{1h}=\theta_h'X+B_h$.
 \end{itemize}
+\vspace{0.2cm}
+\textbf{Note:} I will keep all vectors as column vectors, and I will write every transpose.
 \end{frame}
 
 \begin{frame}{Timeline (Two-Date Economy)}
@@ -259,6 +272,7 @@ $\E[-e^{-\alpha Y}]$ is equivalent to maximizing
 \item $\E[e^{-\alpha Y}] = \exp(-\alpha m + \tfrac{\alpha^2}{2}v)$.
 \item Exponential is monotone, so maximize $-\alpha m + \tfrac{\alpha^2}{2}v$.
 \item Equivalent to maximize $m - \tfrac{\alpha}{2}v$.
+\item This lemma is the workhorse for the rest of the course.
 \end{itemize}
 \end{proofbox}
 \end{frame}
@@ -309,6 +323,7 @@ Using the lemma:
 \frac{\partial}{\partial \theta_h} \Big(\tfrac{\alpha_h}{2}\theta_h'\Sigma\theta_h\Big)
 &= \alpha_h \Sigma \theta_h.
 \end{align*}
+\textbf{Pause:} we use the symmetry of $\Sigma$ here.
 \textbf{FOC:}
 \[\mu - R_f p - \alpha_h \Sigma \theta_h = 0.\]
 \end{frame}
