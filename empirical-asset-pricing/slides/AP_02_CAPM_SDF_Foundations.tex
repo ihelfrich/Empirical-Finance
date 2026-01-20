@@ -1,0 +1,708 @@
+%!TEX program = xelatex
+\documentclass[10pt]{beamer}
+
+% Theme
+\usetheme[progressbar=frametitle]{metropolis}
+\usepackage{appendixnumberbeamer}
+
+% Color palette (RA-inspired, finance-leaning)
+\definecolor{StudyBlue}{HTML}{2E86C1}
+\definecolor{StudyTeal}{HTML}{17A2B8}
+\definecolor{StudyGrey}{HTML}{495057}
+\definecolor{StudyLight}{HTML}{F8F9FA}
+\definecolor{StudyGold}{HTML}{B8860B}
+
+\setbeamercolor{primary}{bg=StudyBlue}
+\setbeamercolor{secondary}{bg=StudyGrey}
+\setbeamercolor{accent}{bg=StudyTeal}
+\setbeamercolor{frametitle}{bg=StudyBlue, fg=white}
+\setbeamercolor{progress bar}{fg=StudyTeal, bg=StudyGrey}
+
+% Font sizing
+\setbeamerfont{normal text}{size=\footnotesize}
+\setbeamerfont{structure}{size=\footnotesize}
+\setbeamerfont{frametitle}{size=\large}
+\setbeamerfont{framesubtitle}{size=\scriptsize}
+
+% Packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+\usepackage{bookmark}
+
+% tcolorbox setup
+\tcbuselibrary{theorems,skins}
+
+% Spacing
+\setlength{\parskip}{2pt}
+\setlength{\itemsep}{1pt}
+
+% Bullet styles
+\setbeamercolor{item}{fg=StudyBlue}
+\setbeamercolor{subitem}{fg=StudyBlue}
+\setbeamercolor{subsubitem}{fg=StudyBlue}
+\setbeamertemplate{itemize item}{\normalsize$\bullet$}
+\setbeamertemplate{itemize subitem}{\large$\circ$}
+\setbeamertemplate{itemize subsubitem}{\Large$\diamond$}
+
+\setbeamercolor{enumerate item}{fg=StudyBlue}
+\setbeamercolor{enumerate subitem}{fg=StudyBlue}
+\setbeamercolor{enumerate subsubitem}{fg=StudyBlue}
+\setbeamertemplate{enumerate item}{\textbf{\arabic{enumi}.}}
+\setbeamertemplate{enumerate subitem}{\textbf{\alph{enumii})}}
+\setbeamertemplate{enumerate subsubitem}{\textbf{\roman{enumiii}.}}
+
+% Math shortcuts
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+
+% Box styles
+\newtcolorbox{roundedbox}{
+    colback=StudyBlue!5,
+    colframe=StudyBlue!80,
+    rounded corners,
+    fonttitle=\bfseries
+}
+
+\newtcolorbox{definitionbox}[1][]{
+    colback=StudyBlue!5,
+    colframe=StudyBlue!80,
+    fonttitle=\bfseries,
+    title=Definition,
+    before upper={
+        \setbeamercolor{itemize item}{fg=StudyBlue}
+        \setbeamercolor{itemize subitem}{fg=StudyBlue}
+        \setbeamercolor{itemize subsubitem}{fg=StudyBlue}
+    },
+    #1
+}
+
+\newtcolorbox{theorembox}[1][]{
+    colback=StudyTeal!5,
+    colframe=StudyTeal!80,
+    fonttitle=\bfseries,
+    title=Theorem,
+    before upper={
+        \setbeamercolor{itemize item}{fg=StudyTeal}
+        \setbeamercolor{itemize subitem}{fg=StudyTeal}
+        \setbeamercolor{itemize subsubitem}{fg=StudyTeal}
+    },
+    #1
+}
+
+\newtcolorbox{examplebox}[1][]{
+    colback=StudyGrey!5,
+    colframe=StudyGrey!80,
+    fonttitle=\bfseries,
+    title=Example,
+    before upper={
+        \setbeamercolor{itemize item}{fg=StudyGrey}
+        \setbeamercolor{itemize subitem}{fg=StudyGrey}
+        \setbeamercolor{itemize subsubitem}{fg=StudyGrey}
+    },
+    #1
+}
+
+\newtcolorbox{notebox}[1][]{
+    colback=black!5,
+    colframe=black!90,
+    fonttitle=\bfseries,
+    fontupper=\footnotesize,
+    title=Intuition,
+    before upper={
+        \setbeamercolor{itemize item}{fg=black}
+        \setbeamercolor{itemize subitem}{fg=black}
+        \setbeamercolor{itemize subsubitem}{fg=black}
+    },
+    #1
+}
+
+\newtcolorbox{proofbox}[1][]{
+    colback=StudyLight,
+    colframe=StudyGrey!50,
+    fonttitle=\bfseries,
+    title=Proof,
+    before upper={
+        \setbeamercolor{itemize item}{fg=StudyGrey}
+        \setbeamercolor{itemize subitem}{fg=StudyGrey}
+        \setbeamercolor{itemize subsubitem}{fg=StudyGrey}
+    },
+    #1
+}
+
+\newtcolorbox{keypoint}[1][]{
+    colback=yellow!10,
+    colframe=orange!80,
+    fonttitle=\bfseries,
+    title=Key Point,
+    before upper={
+        \setbeamercolor{itemize item}{fg=orange}
+        \setbeamercolor{itemize subitem}{fg=orange}
+        \setbeamercolor{itemize subsubitem}{fg=orange}
+    },
+    #1
+}
+
+\newtcolorbox{problembox}[1][]{
+    colback=StudyGold!10,
+    colframe=StudyGold!90,
+    fonttitle=\bfseries,
+    title=Problem,
+    before upper={
+        \setbeamercolor{itemize item}{fg=StudyGold}
+        \setbeamercolor{itemize subitem}{fg=StudyGold}
+        \setbeamercolor{itemize subsubitem}{fg=StudyGold}
+    },
+    #1
+}
+
+\title{Empirical Asset Pricing: Qualifier Prep}
+\subtitle{AP-02: CAPM and SDF Foundations}
+\author{Dr. Ian Helfrich}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}{From the Instructor}
+\small
+I write these slides as a working researcher and teacher. The goal is to make the CAPM feel like
+an unavoidable result rather than a memorized formula. We will move slowly, show all algebra,
+and repeatedly connect each line to the economics it represents.
+
+\medskip
+I am an independent researcher and PhD (Georgia Institute of Technology), not currently affiliated
+with an institution. These notes reflect my own voice and method.
+\end{frame}
+
+\begin{frame}{Roadmap}
+\small
+\begin{enumerate}
+\item \textbf{Build the Mean-Variance Problem}
+\begin{itemize}
+\item Portfolio choice with a risk-free asset
+\item Efficient frontier and tangency portfolio
+\end{itemize}
+\item \textbf{Derive the CAPM Step-by-Step}
+\begin{itemize}
+\item Market clearing and the market portfolio
+\item Beta pricing and risk premia
+\end{itemize}
+\item \textbf{Translate to the SDF View}
+\begin{itemize}
+\item SDF definition and pricing equation
+\item Linear SDF implies CAPM
+\end{itemize}
+\item \textbf{Qualifier Problems + Variants}
+\begin{itemize}
+\item Two full exam-style problems
+\item Common pitfalls and extensions
+\end{itemize}
+\end{enumerate}
+\end{frame}
+
+\section{Motivation}
+
+\begin{frame}{Why CAPM Still Matters}
+\small
+\begin{itemize}
+\item The CAPM is not an empirical truth; it is a disciplined equilibrium benchmark.
+\item It teaches you how to translate preferences and technology into pricing restrictions.
+\item Most qualifier questions use CAPM logic as a baseline to test deeper understanding.
+\end{itemize}
+
+\begin{notebox}
+The qualifier test is often: can you recreate the logic under time pressure,
+not can you recite the final formula.
+\end{notebox}
+\end{frame}
+
+\begin{frame}{A Preview of the Destination}
+\small
+We will show that in equilibrium with a risk-free asset,
+\[
+\E[R_i] - R_f = \beta_i\bigl(\E[R_M] - R_f\bigr),
+\qquad
+\beta_i = \frac{\Cov(R_i, R_M)}{\Var(R_M)}.
+\]
+
+\medskip
+Then we will prove the same equation from the SDF condition
+\[
+\E[m R_i] = 1,
+\qquad
+m = a - b R_M.
+\]
+
+\begin{keypoint}
+Two derivations, one idea: only covariance with the market is priced.
+\end{keypoint}
+\end{frame}
+
+\section{Mean-Variance Foundation}
+
+\begin{frame}{Setup: Assets and Portfolios}
+\small
+\begin{itemize}
+\item $N$ risky assets with returns $R \in \R^N$, mean $\mu$, covariance $\Sigma$.
+\item A risk-free asset with return $R_f$.
+\item A portfolio is weights $w \in \R^N$ in risky assets; remainder in the risk-free asset.
+\end{itemize}
+
+\begin{definitionbox}
+The portfolio return is
+\[
+R_p = R_f + w' (R - R_f \mathbf{1}).
+\]
+\end{definitionbox}
+\end{frame}
+
+\begin{frame}{Mean and Variance of the Portfolio}
+\small
+\begin{align*}
+\E[R_p] &= R_f + w'(\mu - R_f \mathbf{1}), \\
+\Var(R_p) &= w' \Sigma w.
+\end{align*}
+
+\begin{notebox}
+The mean depends only on the projection of $w$ on excess means,
+while the variance depends on $\Sigma$.
+\end{notebox}
+\end{frame}
+
+\begin{frame}{Mean-Variance Optimization Problem}
+\small
+The canonical investor solves
+\[
+\max_{w} \; \E[R_p] - \frac{\gamma}{2} \Var(R_p).
+\]
+Substitute the formulas:
+\[
+\max_{w} \; R_f + w'(\mu - R_f \mathbf{1}) - \frac{\gamma}{2} w'\Sigma w.
+\]
+
+\begin{keypoint}
+All investors choose from the same set of efficient portfolios.
+Only $\gamma$ moves them along the line.
+\end{keypoint}
+\end{frame}
+
+\begin{frame}{Solve the First-Order Condition}
+\small
+Take the gradient with respect to $w$:
+\[
+\mu - R_f \mathbf{1} - \gamma \Sigma w = 0.
+\]
+Solve:
+\[
+\Sigma w = \frac{1}{\gamma}(\mu - R_f \mathbf{1}).
+\]
+Therefore,
+\[
+ w = \frac{1}{\gamma} \Sigma^{-1}(\mu - R_f \mathbf{1}).
+\]
+
+\begin{notebox}
+Up to a scaling factor, everyone holds the same risky portfolio.
+\end{notebox}
+\end{frame}
+
+\begin{frame}{The Tangency Portfolio}
+\small
+Define the tangency portfolio weights
+\[
+ w_T = \frac{\Sigma^{-1}(\mu - R_f \mathbf{1})}{\mathbf{1}'\Sigma^{-1}(\mu - R_f \mathbf{1})}.
+\]
+This portfolio maximizes the Sharpe ratio.
+
+\begin{keypoint}
+Every mean-variance investor holds the tangency portfolio and
+adjusts overall risk by scaling with $R_f$.
+\end{keypoint}
+\end{frame}
+
+\begin{frame}{Market Clearing Logic}
+\small
+In equilibrium, the aggregate risky portfolio must equal the market portfolio $M$.
+If all agents hold a multiple of the tangency portfolio, then
+\[
+ w_M = w_T.
+\]
+
+\begin{notebox}
+This is the key equilibrium step: the market portfolio is efficient.
+Once you accept that, CAPM follows.
+\end{notebox}
+\end{frame}
+
+\section{CAPM Derivation}
+
+\begin{frame}{A Key Relationship: Covariance with the Market}
+\small
+Let $R_M$ be the market return. For any asset $i$:
+\[
+\Cov(R_i, R_M) = \sigma_{iM}.
+\]
+
+From mean-variance efficiency we can show
+\[
+\mu_i - R_f = \lambda \sigma_{iM}
+\]
+for some scalar $\lambda$.
+\end{frame}
+
+\begin{frame}{Derivation Step-by-Step}
+\small
+We know that $w_M$ satisfies
+\[
+\Sigma w_M = \kappa (\mu - R_f \mathbf{1})
+\]
+for some scalar $\kappa$.
+
+Take the $i$th element:
+\[
+(\Sigma w_M)_i = \kappa (\mu_i - R_f).
+\]
+But $(\Sigma w_M)_i = \Cov(R_i, R_M)$, so
+\[
+\mu_i - R_f = \frac{1}{\kappa} \Cov(R_i, R_M).
+\]
+\end{frame}
+
+\begin{frame}{Identify the Slope}
+\small
+Apply the same formula to the market itself:
+\[
+\mu_M - R_f = \frac{1}{\kappa} \Var(R_M).
+\]
+Solve for $1/\kappa$ and substitute:
+\[
+\mu_i - R_f = \frac{\Cov(R_i, R_M)}{\Var(R_M)} (\mu_M - R_f).
+\]
+This is the CAPM.
+\end{frame}
+
+\begin{frame}{Beta Form}
+\small
+Define
+\[
+\beta_i = \frac{\Cov(R_i, R_M)}{\Var(R_M)}.
+\]
+Then
+\[
+\E[R_i] = R_f + \beta_i (\E[R_M] - R_f).
+\]
+
+\begin{keypoint}
+Only covariance with the market matters; idiosyncratic risk is diversifiable.
+\end{keypoint}
+\end{frame}
+
+\begin{frame}{Geometric Interpretation}
+\small
+In mean-variance space, the efficient frontier with a risk-free asset becomes a line.
+The line passes through $R_f$ and is tangent to the risky-asset frontier.
+
+\begin{notebox}
+The tangency point is the market portfolio. The slope of this line
+is the Sharpe ratio of the market.
+\end{notebox}
+\end{frame}
+
+\section{SDF Formulation}
+
+\begin{frame}{The Stochastic Discount Factor}
+\small
+\begin{definitionbox}
+A stochastic discount factor (SDF) $m$ is a random variable such that
+\[
+\E[m R_i] = 1
+\]
+for every traded asset $i$.
+\end{definitionbox}
+
+\begin{notebox}
+This is the modern pricing equation. It is equivalent to no-arbitrage plus
+market completeness in this simple setting.
+\end{notebox}
+\end{frame}
+
+\begin{frame}{Linear SDF Assumption}
+\small
+Suppose the SDF is linear in the market return:
+\[
+ m = a - b R_M.
+\]
+Use the pricing equations for the risk-free asset and the market:
+\begin{align*}
+\E[m] R_f &= 1, \\
+\E[m R_M] &= 1.
+\end{align*}
+We can solve for $a$ and $b$ explicitly.
+\end{frame}
+
+\begin{frame}{Solve for $a$ and $b$}
+\small
+First equation:
+\[
+R_f \E[a - b R_M] = 1 \quad \Rightarrow \quad a - b \E[R_M] = \frac{1}{R_f}.
+\]
+Second equation:
+\[
+\E[(a - b R_M) R_M] = 1 \quad \Rightarrow \quad a \E[R_M] - b \E[R_M^2] = 1.
+\]
+
+Solve this linear system for $a$ and $b$.
+\end{frame}
+
+\begin{frame}{Key Covariance Identity}
+\small
+A cleaner way is to use covariance:
+\begin{align*}
+\E[m R_i] &= \E[m] \E[R_i] + \Cov(m, R_i) = 1.
+\end{align*}
+Rearrange:
+\[
+\E[R_i] - R_f = -\frac{\Cov(m, R_i)}{\E[m]}.
+\]
+
+If $m = a - b R_M$, then $\Cov(m, R_i) = -b \Cov(R_M, R_i)$.
+\end{frame}
+
+\begin{frame}{Recover CAPM from the SDF}
+\small
+Substitute the covariance expression:
+\[
+\E[R_i] - R_f = \frac{b}{\E[m]} \Cov(R_i, R_M).
+\]
+Apply the same formula to asset $M$ to identify the slope:
+\[
+\E[R_M] - R_f = \frac{b}{\E[m]} \Var(R_M).
+\]
+Divide the two equations to obtain CAPM:
+\[
+\E[R_i] - R_f = \beta_i (\E[R_M] - R_f).
+\]
+\end{frame}
+
+\section{Worked Examples}
+
+\begin{frame}{Example 1: Compute Beta and Expected Return}
+\small
+Suppose:
+\begin{itemize}
+\item $R_f = 1.02$ (2\% per period),
+\item $\E[R_M] = 1.10$,
+\item $\Var(R_M) = 0.04$,
+\item $\Cov(R_i, R_M) = 0.06$.
+\end{itemize}
+Then
+\[
+\beta_i = \frac{0.06}{0.04} = 1.5.
+\]
+So
+\[
+\E[R_i] = 1.02 + 1.5(1.10 - 1.02) = 1.02 + 1.5(0.08) = 1.14.
+\]
+\end{frame}
+
+\begin{frame}{Example 2: From Covariance Matrix to Betas}
+\small
+Let
+\[
+\Sigma = \begin{bmatrix}
+0.04 & 0.01 \\
+0.01 & 0.09
+\end{bmatrix},
+\qquad
+w_M = \begin{bmatrix}0.6 \\ 0.4\end{bmatrix}.
+\]
+Compute
+\[
+\Var(R_M) = w_M' \Sigma w_M = 0.6^2(0.04) + 2(0.6)(0.4)(0.01) + 0.4^2(0.09) = 0.0432.
+\]
+For asset 1,
+\[
+\Cov(R_1, R_M) = e_1'\Sigma w_M = 0.6(0.04) + 0.4(0.01) = 0.028.
+\]
+Hence $\beta_1 = 0.028/0.0432 \approx 0.648$.
+\end{frame}
+
+\begin{frame}{Example 3: Tangency Portfolio by Hand}
+\small
+Suppose
+\[
+\mu = \begin{bmatrix}1.08 \\ 1.12\end{bmatrix},
+\quad
+R_f = 1.02,
+\quad
+\Sigma = \begin{bmatrix}0.04 & 0.01 \\ 0.01 & 0.09\end{bmatrix}.
+\]
+Compute
+\[
+\mu - R_f \mathbf{1} = \begin{bmatrix}0.06 \\ 0.10\end{bmatrix}.
+\]
+Then
+\[
+\Sigma^{-1}(\mu - R_f \mathbf{1}) = \frac{1}{0.0035}
+\begin{bmatrix}0.09 & -0.01 \\ -0.01 & 0.04\end{bmatrix}
+\begin{bmatrix}0.06 \\ 0.10\end{bmatrix}
+= \frac{1}{0.0035}
+\begin{bmatrix}0.0044 \\ 0.0034\end{bmatrix}.
+\]
+Normalize to sum to 1: $w_T \propto (0.0044, 0.0034)$.
+\end{frame}
+
+\section{Qualifier-Style Problems}
+
+\begin{frame}{Problem A: Full CAPM Derivation}
+\small
+\begin{problembox}
+An economy has $N$ risky assets with mean $\mu$ and covariance $\Sigma$ and a risk-free asset $R_f$.
+Assume mean-variance preferences. Show that in equilibrium $\E[R_i] - R_f = \beta_i(\E[R_M] - R_f)$.
+\end{problembox}
+
+\textbf{Outline:}
+\begin{enumerate}
+\item Write the mean-variance objective and FOC.
+\item Show that the tangency portfolio has weights proportional to $\Sigma^{-1}(\mu - R_f \mathbf{1})$.
+\item Market clearing implies $w_M = w_T$.
+\item Convert $\Sigma w_M = \kappa (\mu - R_f \mathbf{1})$ to a covariance statement.
+\item Solve for $\kappa$ using the market itself.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Problem A: Step-by-Step Solution (1/2)}
+\small
+Start with the investor's problem:
+\[
+\max_w R_f + w'(\mu - R_f \mathbf{1}) - \frac{\gamma}{2} w'\Sigma w.
+\]
+FOC:
+\[
+\mu - R_f \mathbf{1} - \gamma \Sigma w = 0.
+\]
+Thus
+\[
+ w = \frac{1}{\gamma} \Sigma^{-1}(\mu - R_f \mathbf{1}).
+\]
+Because all investors differ only in $\gamma$, they all hold the same risky portfolio.
+\end{frame}
+
+\begin{frame}{Problem A: Step-by-Step Solution (2/2)}
+\small
+Market clearing implies $w_M$ is proportional to $\Sigma^{-1}(\mu - R_f \mathbf{1})$:
+\[
+\Sigma w_M = \kappa (\mu - R_f \mathbf{1}).
+\]
+Take element $i$:
+\[
+(\Sigma w_M)_i = \kappa (\mu_i - R_f).
+\]
+But $(\Sigma w_M)_i = \Cov(R_i, R_M)$, so
+\[
+\mu_i - R_f = \frac{1}{\kappa} \Cov(R_i, R_M).
+\]
+Apply the same to $M$ to solve for $1/\kappa$, and obtain CAPM.
+\end{frame}
+
+\begin{frame}{Problem B: CAPM from an SDF}
+\small
+\begin{problembox}
+Suppose asset prices satisfy $\E[m R_i] = 1$ for all assets, and $m = a - b R_M$.
+Show that expected returns obey the CAPM.
+\end{problembox}
+
+\textbf{Outline:}
+\begin{enumerate}
+\item Use $\E[m R_i] = 1$ to express $\E[R_i]$ in terms of $\Cov(m, R_i)$.
+\item Substitute $m = a - b R_M$ and simplify.
+\item Apply the formula to $R_M$ to identify the slope.
+\item Divide the two equations to obtain the CAPM.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Problem B: Step-by-Step Solution}
+\small
+Using covariance:
+\begin{align*}
+\E[m R_i] &= \E[m] \E[R_i] + \Cov(m, R_i) = 1, \\
+\E[R_i] - R_f &= -\frac{\Cov(m, R_i)}{\E[m]}.
+\end{align*}
+If $m = a - b R_M$, then $\Cov(m, R_i) = -b \Cov(R_M, R_i)$.
+So
+\[
+\E[R_i] - R_f = \frac{b}{\E[m]} \Cov(R_i, R_M).
+\]
+Apply the same to $R_M$ and divide to recover CAPM.
+\end{frame}
+
+\section{Pitfalls and Extensions}
+
+\begin{frame}{Common Pitfalls}
+\small
+\begin{itemize}
+\item Confusing $R_f$ (gross return) with the risk-free rate (net return).
+\item Forgetting to show the market portfolio is efficient.
+\item Dropping the key covariance identity $(\Sigma w_M)_i = \Cov(R_i, R_M)$.
+\item Mixing up $\beta_i$ with correlations.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Extension: Zero-Beta CAPM}
+\small
+If no risk-free asset exists, the CAPM becomes
+\[
+\E[R_i] = \E[R_Z] + \beta_i^Z \bigl(\E[R_M] - \E[R_Z]\bigr)
+\]
+where $R_Z$ is the return on the zero-beta portfolio.
+
+\begin{notebox}
+Qualifiers sometimes ask you to derive this formula or interpret $R_Z$.
+\end{notebox}
+\end{frame}
+
+\begin{frame}{Extension: From CAPM to Factor Models}
+\small
+CAPM is a one-factor model with factor $R_M$.
+Empirical work generalizes this as
+\[
+\E[R_i] = R_f + \beta_{i1} \lambda_1 + \cdots + \beta_{ik} \lambda_k.
+\]
+
+\begin{keypoint}
+Many qualifier questions ask whether CAPM is nested in a larger factor model
+and how to test that nesting.
+\end{keypoint}
+\end{frame}
+
+\section{Quick Practice}
+
+\begin{frame}{Two-Minute Drill}
+\small
+\begin{enumerate}
+\item In one sentence, explain why the market portfolio must be mean-variance efficient.
+\item Given $\beta_i = 0.7$, $R_f = 1.01$, $\E[R_M] = 1.09$, compute $\E[R_i]$.
+\item Explain, in words, why idiosyncratic risk is not priced.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Closing}
+\small
+We now have two derivations of CAPM that agree line-for-line.
+This is the foundation for most empirical asset pricing questions on qualifiers.
+
+\medskip
+Next: we will move to testing CAPM and building cross-sectional regressions.
+\end{frame}
+
+\end{document}

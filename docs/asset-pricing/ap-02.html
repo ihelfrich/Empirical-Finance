@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AP-02 | CAPM + SDF Foundations</title>
+  <meta name="description" content="AP-02 module: CAPM derivations, SDF foundations, and qualifier-style problems.">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script defer src="../assets/app.js"></script>
+</head>
+<body>
+  <header class="nav">
+    <div class="container">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>AP-02 Module</span>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html">Asset Pricing Track</a>
+        <a href="#overview">Overview</a>
+        <a href="#map">Concept Map</a>
+        <a href="#problems">Problem Walkthroughs</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container" id="overview">
+      <div class="hero-copy reveal">
+        <span class="eyebrow">AP-02: CAPM + SDF Foundations</span>
+        <h1>Build the CAPM Twice and See Why It Must Agree</h1>
+        <p>
+          This module is built to make CAPM feel inevitable: first through mean-variance logic,
+          then through the stochastic discount factor. We do every derivation in full and pin
+          each step to its economic meaning.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="#map">Open the Concept Map</a>
+          <a class="button secondary" href="#problems">Jump to Problems</a>
+        </div>
+      </div>
+      <div class="hero-panel reveal" data-delay="140">
+        <div class="signal-grid">
+          <div class="signal-card">
+            <div class="signal-title">Core Equation</div>
+            <h3>E[R_i] - R_f = beta_i (E[R_M] - R_f)</h3>
+            <p>We derive this twice and explain where each term comes from.</p>
+          </div>
+          <div class="signal-card">
+            <div class="signal-title">SDF Bridge</div>
+            <h3>E[m R_i] = 1</h3>
+            <p>One pricing equation unifies equilibrium and no-arbitrage logic.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="map" class="section container">
+      <h2 class="reveal">Concept Map</h2>
+      <p class="section-intro reveal" data-delay="120">
+        The module is structured as a narrative. Every node is paired with a qualifier-style problem.
+      </p>
+      <div class="module-grid">
+        <article class="module-card reveal" data-delay="180">
+          <h3>Mean-Variance Engine</h3>
+          <ul>
+            <li>Portfolio return and variance decomposition</li>
+            <li>FOC and tangency portfolio</li>
+            <li>Market clearing and efficiency</li>
+          </ul>
+        </article>
+        <article class="module-card reveal" data-delay="240">
+          <h3>CAPM Derivation</h3>
+          <ul>
+            <li>Covariance identity: (Sigma w_M)_i</li>
+            <li>Beta pricing equation</li>
+            <li>Sharpe ratio interpretation</li>
+          </ul>
+        </article>
+        <article class="module-card reveal" data-delay="300">
+          <h3>SDF View</h3>
+          <ul>
+            <li>Pricing kernel definition</li>
+            <li>Linear SDF implies CAPM</li>
+            <li>Link to factor models</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section container">
+      <h2 class="reveal">Deliverables in This Module</h2>
+      <div class="resource-grid">
+        <article class="resource-card reveal" data-delay="160">
+          <h4>Slide Deck</h4>
+          <p>Full AP-02 LaTeX slides with step-by-step derivations and examples.</p>
+          <p><a href="AP_02_CAPM_SDF_Foundations.pdf">Download AP-02 slides (PDF)</a></p>
+        </article>
+        <article class="resource-card reveal" data-delay="210">
+          <h4>Problem Scripts</h4>
+          <p>Qualifier problems written as solution templates and drill sheets.</p>
+        </article>
+      </div>
+      <div class="callout reveal" data-delay="260">
+        <p>
+          Objective: be able to derive the CAPM under time pressure, explain each assumption,
+          and translate it to the SDF language without hesitation.
+        </p>
+      </div>
+    </section>
+
+    <section id="problems" class="section container">
+      <h2 class="reveal">Problem Walkthroughs</h2>
+      <p class="section-intro reveal" data-delay="120">
+        The walkthroughs are built exactly like the exam: setup, derivation, check, interpret.
+      </p>
+      <div class="method-grid">
+        <div class="method-card reveal" data-delay="160">
+          <h4>Problem A: Full CAPM Derivation</h4>
+          <p>Mean-variance optimization, tangency portfolio, market clearing, and beta pricing.</p>
+        </div>
+        <div class="method-card reveal" data-delay="210">
+          <h4>Problem B: CAPM from SDF</h4>
+          <p>Use E[mR]=1 and a linear SDF to re-derive the CAPM cleanly.</p>
+        </div>
+        <div class="method-card reveal" data-delay="260">
+          <h4>Problem C: Zero-Beta CAPM</h4>
+          <p>No risk-free asset? Build the zero-beta version and interpret the intercept.</p>
+        </div>
+        <div class="method-card reveal" data-delay="310">
+          <h4>Problem D: Factor Model Nesting</h4>
+          <p>Show how CAPM sits inside multi-factor models and what that means for tests.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container">
+      <h2 class="reveal">Instructor Voice</h2>
+      <p class="section-intro reveal" data-delay="120">
+        I am an independent researcher and PhD (Georgia Institute of Technology), not currently affiliated
+        with an institution. These materials are my own and are written to feel like a personal
+        whiteboard session.
+      </p>
+    </section>
+
+    <footer class="footer">
+      <div class="container footer-grid">
+        <div>
+          <h4>AP-02 Module</h4>
+          <p>CAPM and SDF foundations for qualifier-level mastery.</p>
+        </div>
+        <div>
+          <h4>Back to Track</h4>
+          <p><a href="index.html">Return to Empirical Asset Pricing</a></p>
+        </div>
+        <div>
+          <h4>Instructor</h4>
+          <p>Dr. Ian Helfrich, independent researcher.</p>
+        </div>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>

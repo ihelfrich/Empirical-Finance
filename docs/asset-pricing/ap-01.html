@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AP-01 | CARA-Normal Equilibrium</title>
+  <meta name="description" content="AP-01 module: CARA-normal equilibrium, demand, prices, and risk premia.">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script defer src="../assets/app.js"></script>
+</head>
+<body>
+  <header class="nav">
+    <div class="container">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>AP-01 Module</span>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html">Asset Pricing Track</a>
+        <a href="#overview">Overview</a>
+        <a href="#map">Concept Map</a>
+        <a href="#problems">Problem Walkthroughs</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container" id="overview">
+      <div class="hero-copy reveal">
+        <span class="eyebrow">AP-01: CARA-Normal Equilibrium</span>
+        <h1>Turn Preferences Into Prices</h1>
+        <p>
+          We start with exponential utility and normal uncertainty, then build equilibrium step by step.
+          Every line shows how preferences, risk, and market clearing translate into prices and premia.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="#map">Open the Concept Map</a>
+          <a class="button secondary" href="#problems">Jump to Problems</a>
+        </div>
+      </div>
+      <div class="hero-panel reveal" data-delay="140">
+        <div class="signal-grid">
+          <div class="signal-card">
+            <div class="signal-title">Core Objects</div>
+            <h3>CARA utility, certainty equivalents, equilibrium pricing</h3>
+            <p>We compute demand, aggregate risk, and see prices fall out cleanly.</p>
+          </div>
+          <div class="signal-card">
+            <div class="signal-title">Signature Move</div>
+            <h3>Complete the square</h3>
+            <p>Normality lets us solve the expected utility in closed form.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="map" class="section container">
+      <h2 class="reveal">Concept Map</h2>
+      <p class="section-intro reveal" data-delay="120">
+        The module is structured as a chain. Each step becomes a qualifier-style problem.
+      </p>
+      <div class="module-grid">
+        <article class="module-card reveal" data-delay="180">
+          <h3>CARA + Normal Setup</h3>
+          <ul>
+            <li>Utility, wealth, and normal payoffs</li>
+            <li>Certainty equivalent formula</li>
+            <li>Risk tolerance aggregation</li>
+          </ul>
+        </article>
+        <article class="module-card reveal" data-delay="240">
+          <h3>Demand and Market Clearing</h3>
+          <ul>
+            <li>First-order conditions in full</li>
+            <li>Aggregate demand and supply</li>
+            <li>Equilibrium price vector</li>
+          </ul>
+        </article>
+        <article class="module-card reveal" data-delay="300">
+          <h3>Risk Premia</h3>
+          <ul>
+            <li>Mean-variance pricing form</li>
+            <li>Covariance with aggregate risk</li>
+            <li>Interpretation of price of risk</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section container">
+      <h2 class="reveal">Deliverables in This Module</h2>
+      <div class="resource-grid">
+        <article class="resource-card reveal" data-delay="160">
+          <h4>Slide Deck</h4>
+          <p>Full AP-01 LaTeX slides with detailed derivations and worked examples.</p>
+          <p><a href="AP_01_CARA_Normal_Equilibrium.pdf">Download AP-01 slides (PDF)</a></p>
+        </article>
+        <article class="resource-card reveal" data-delay="210">
+          <h4>Problem Scripts</h4>
+          <p>Qualifier problems rewritten as step-by-step solution templates.</p>
+        </article>
+      </div>
+      <div class="callout reveal" data-delay="260">
+        <p>
+          Objective: be able to derive equilibrium prices in a CARA-normal economy under time pressure,
+          and interpret every term in the pricing equation.
+        </p>
+      </div>
+    </section>
+
+    <section id="problems" class="section container">
+      <h2 class="reveal">Problem Walkthroughs</h2>
+      <p class="section-intro reveal" data-delay="120">
+        Each walkthrough starts with a real exam prompt, then builds the full derivation line-by-line.
+      </p>
+      <div class="method-grid">
+        <div class="method-card reveal" data-delay="160">
+          <h4>Problem A: Solve Individual Demand</h4>
+          <p>Compute optimal holdings with CARA utility and normal payoffs.</p>
+        </div>
+        <div class="method-card reveal" data-delay="210">
+          <h4>Problem B: Market Clearing</h4>
+          <p>Aggregate demand, clear the market, and identify equilibrium prices.</p>
+        </div>
+        <div class="method-card reveal" data-delay="260">
+          <h4>Problem C: Risk Premia</h4>
+          <p>Translate equilibrium prices into expected excess returns and premia.</p>
+        </div>
+        <div class="method-card reveal" data-delay="310">
+          <h4>Problem D: Comparative Statics</h4>
+          <p>Show how prices shift with risk tolerance, variance, and endowment risk.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container">
+      <h2 class="reveal">Instructor Voice</h2>
+      <p class="section-intro reveal" data-delay="120">
+        I am an independent researcher and PhD (Georgia Institute of Technology), not currently affiliated
+        with an institution. These materials are my own and are written to feel like a personal
+        whiteboard session.
+      </p>
+    </section>
+
+    <footer class="footer">
+      <div class="container footer-grid">
+        <div>
+          <h4>AP-01 Module</h4>
+          <p>CARA-normal equilibrium for qualifier-level mastery.</p>
+        </div>
+        <div>
+          <h4>Back to Track</h4>
+          <p><a href="index.html">Return to Empirical Asset Pricing</a></p>
+        </div>
+        <div>
+          <h4>Instructor</h4>
+          <p>Dr. Ian Helfrich, independent researcher.</p>
+        </div>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>
