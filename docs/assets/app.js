@@ -52,6 +52,10 @@ accordionButtons.forEach((button) => {
     if (!item) return;
     const isOpen = item.classList.toggle('is-open');
     button.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    const icon = button.querySelector('[data-accordion-icon]');
+    if (icon) {
+      icon.textContent = isOpen ? '-' : '+';
+    }
   });
 });
 
@@ -151,4 +155,123 @@ calculators.forEach((calculator) => {
 
   inputs.forEach((input) => input.addEventListener('input', compute));
   compute();
+});
+
+const checklistGroups = Array.from(document.querySelectorAll('[data-checklist]'));
+checklistGroups.forEach((group) => {
+  const key = `checklist:${group.dataset.checklist || 'default'}`;
+  const items = Array.from(group.querySelectorAll('input[type="checkbox"]'));
+  const resetButton = group.querySelector('[data-checklist-reset]');
+  const progress = group.querySelector('[data-checklist-progress]');
+
+  const loadState = () => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(key) || '[]');
+      items.forEach((input, index) => {
+        input.checked = Boolean(saved[index]);
+      });
+    } catch (error) {
+      items.forEach((input) => {
+        input.checked = false;
+      });
+    }
+  };
+
+  const saveState = () => {
+    const state = items.map((input) => input.checked);
+    try {
+      localStorage.setItem(key, JSON.stringify(state));
+    } catch (error) {
+      return;
+    }
+  };
+
+  const updateProgress = () => {
+    if (!progress) return;
+    const done = items.filter((input) => input.checked).length;
+    progress.textContent = `${done} / ${items.length} checkpoints`;
+  };
+
+  items.forEach((input) => {
+    input.addEventListener('change', () => {
+      saveState();
+      updateProgress();
+    });
+  });
+
+  if (resetButton) {
+    resetButton.addEventListener('click', () => {
+      items.forEach((input) => {
+        input.checked = false;
+      });
+      saveState();
+      updateProgress();
+    });
+  }
+
+  loadState();
+  updateProgress();
+});
+
+const timers = Array.from(document.querySelectorAll('[data-timer]'));
+timers.forEach((timer) => {
+  const display = timer.querySelector('[data-timer-display]');
+  const input = timer.querySelector('[data-timer-input]');
+  const startButton = timer.querySelector('[data-timer-action="start"]');
+  const pauseButton = timer.querySelector('[data-timer-action="pause"]');
+  const resetButton = timer.querySelector('[data-timer-action="reset"]');
+
+  const parseMinutes = () => {
+    const fallback = Number(timer.dataset.timerMinutes || 15);
+    if (!input) return Number.isFinite(fallback) ? fallback : 15;
+    const value = Number(input.value);
+    return Number.isFinite(value) && value > 0 ? value : fallback;
+  };
+
+  let remaining = Math.round(parseMinutes() * 60);
+  let intervalId = null;
+
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.max(seconds % 60, 0);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  const render = () => {
+    if (display) display.textContent = formatTime(remaining);
+  };
+
+  const tick = () => {
+    remaining -= 1;
+    if (remaining <= 0) {
+      remaining = 0;
+      clearInterval(intervalId);
+      intervalId = null;
+    }
+    render();
+  };
+
+  const start = () => {
+    if (intervalId) return;
+    intervalId = window.setInterval(tick, 1000);
+  };
+
+  const pause = () => {
+    if (!intervalId) return;
+    clearInterval(intervalId);
+    intervalId = null;
+  };
+
+  const reset = () => {
+    pause();
+    remaining = Math.round(parseMinutes() * 60);
+    render();
+  };
+
+  if (startButton) startButton.addEventListener('click', start);
+  if (pauseButton) pauseButton.addEventListener('click', pause);
+  if (resetButton) resetButton.addEventListener('click', reset);
+  if (input) input.addEventListener('change', reset);
+
+  render();
 });

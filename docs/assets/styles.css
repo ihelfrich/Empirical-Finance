@@ -549,7 +549,7 @@ body[data-mode="learn"] .mode-summary {
   cursor: pointer;
 }
 
-.accordion-button span {
+.accordion-button [data-accordion-icon] {
   color: var(--accent);
   font-size: 1.2rem;
 }
@@ -705,6 +705,94 @@ body[data-mode="learn"] .mode-summary {
   border-radius: 999px;
   background: rgba(18, 26, 36, 0.08);
   font-size: 0.85rem;
+}
+
+.checklist {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+  padding: 18px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(18, 26, 36, 0.12);
+  background: #fff;
+  box-shadow: 0 16px 32px rgba(18, 26, 36, 0.08);
+}
+
+.checklist-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  font-size: 0.98rem;
+  color: var(--ink-soft);
+}
+
+.checklist-item input {
+  margin-top: 3px;
+  accent-color: var(--accent);
+}
+
+.checklist-item strong {
+  color: var(--ink);
+}
+
+.checklist-footer {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.checklist-footer button {
+  border-radius: 999px;
+  border: 1px solid rgba(18, 26, 36, 0.2);
+  background: transparent;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.checklist-progress {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+.timer {
+  margin-top: 18px;
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(18, 26, 36, 0.12);
+  background: #fffaf0;
+  box-shadow: 0 16px 32px rgba(18, 26, 36, 0.08);
+}
+
+.timer-display {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 2rem;
+  letter-spacing: 0.08em;
+  margin-bottom: 14px;
+}
+
+.timer-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.timer-controls button {
+  border-radius: 999px;
+  border: 1px solid rgba(18, 26, 36, 0.2);
+  background: transparent;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.timer-controls input {
+  width: 90px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(18, 26, 36, 0.2);
 }
 
 @media (max-width: 980px) {

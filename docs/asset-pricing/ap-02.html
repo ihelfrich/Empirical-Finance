@@ -19,7 +19,8 @@
       </div>
       <nav class="nav-links">
         <a href="index.html">Asset Pricing Track</a>
-        <a href="#walkthrough">Live Walkthrough</a>
+        <a href="#flight-plan">Flight Plan</a>
+        <a href="#walkthrough">Walkthrough</a>
         <a href="#problems">Problem Bank</a>
         <a href="#deck">Slide Deck</a>
       </nav>
@@ -30,11 +31,10 @@
     <section class="hero container" id="overview">
       <div class="hero-copy reveal">
         <span class="eyebrow">AP-02: CAPM + SDF Foundations</span>
-        <h1>Build the CAPM Twice and See Why It Must Agree</h1>
+        <h1>Derive the CAPM Twice</h1>
         <p>
-          This module makes CAPM feel inevitable: first through mean-variance logic,
-          then through the stochastic discount factor. We do every derivation in full and
-          pin each step to its economic meaning.
+          This module is about ownership. You will derive CAPM from mean-variance logic, then
+          re-derive it from the pricing kernel. Same equation, two viewpoints, one story.
         </p>
         <div class="action-bar">
           <div class="toggle-group" role="group" aria-label="Study mode">
@@ -49,26 +49,78 @@
           <div class="signal-card">
             <div class="signal-title">Core Equation</div>
             <h3>E[R_i] - R_f = beta_i (E[R_M] - R_f)</h3>
-            <p>We derive this twice and explain where each term comes from.</p>
+            <p>We walk into this result, then walk out with it again via SDF.</p>
           </div>
           <div class="signal-card">
             <div class="signal-title">SDF Bridge</div>
             <h3>E[m R_i] = 1</h3>
-            <p>One pricing equation unifies equilibrium and no-arbitrage logic.</p>
+            <p>One pricing equation that explains every asset on the sheet.</p>
           </div>
           <div class="signal-card">
             <div class="signal-title">Exam Anchor</div>
             <h3>Covariance is the price</h3>
-            <p>Only covariance with the market is priced, not idiosyncratic noise.</p>
+            <p>No covariance with the market, no risk premium. Period.</p>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section id="flight-plan" class="section container">
+      <h2 class="reveal">Flight Plan</h2>
+      <p class="section-intro reveal" data-delay="120">
+        If you can execute this cleanly, you can answer any CAPM qualifier question I have seen.
+      </p>
+      <div class="checklist reveal" data-delay="180" data-checklist="ap02-core">
+        <label class="checklist-item">
+          <input type="checkbox">
+          <span><strong>Write the mean-variance FOC.</strong> Show
+            \(\mu - R_f \mathbf{1} - \gamma \Sigma w = 0\).</span>
+        </label>
+        <label class="checklist-item">
+          <input type="checkbox">
+          <span><strong>Identify the market portfolio.</strong> Argue the market is the tangency portfolio.</span>
+        </label>
+        <label class="checklist-item">
+          <input type="checkbox">
+          <span><strong>Convert to covariance form.</strong> Use
+            \((\Sigma w_M)_i = \Cov(R_i, R_M)\).</span>
+        </label>
+        <label class="checklist-item">
+          <input type="checkbox">
+          <span><strong>Pin down the slope.</strong> Apply the equation to \(R_M\) and solve for beta.</span>
+        </label>
+        <label class="checklist-item">
+          <input type="checkbox">
+          <span><strong>Repeat with the SDF.</strong> Use \(\E[mR_i]=1\) and linear \(m\).</span>
+        </label>
+        <div class="checklist-footer">
+          <button type="button" data-checklist-reset>Reset</button>
+          <span class="checklist-progress" data-checklist-progress></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container">
+      <h2 class="reveal">Core Equations You Must Own</h2>
+      <p class="section-intro reveal" data-delay="120">
+        Put these on your scratch paper without thinking. That is the standard.
+      </p>
+      <div class="resource-grid">
+        <article class="resource-card reveal" data-delay="160">
+          <h4>CAPM</h4>
+          <p class="math-block">\(\E[R_i] - R_f = \beta_i(\E[R_M]-R_f)\)</p>
+        </article>
+        <article class="resource-card reveal" data-delay="210">
+          <h4>SDF Pricing</h4>
+          <p class="math-block">\(\E[m R_i] = 1\)</p>
+        </article>
       </div>
     </section>
 
     <section id="walkthrough" class="section container">
       <h2 class="reveal">Live Walkthrough</h2>
       <p class="section-intro reveal" data-delay="120">
-        Use Learn Mode for full narration and Exam Mode for a stripped outline.
+        Learn Mode gives full narration. Exam Mode removes the commentary so you can rehearse.
       </p>
       <div class="stepper reveal" data-stepper data-delay="180">
         <div class="stepper-panels">
@@ -121,9 +173,27 @@
     </section>
 
     <section class="section container">
+      <h2 class="reveal">Exam Timer</h2>
+      <p class="section-intro reveal" data-delay="120">
+        Write the full CAPM derivation in one pass. Use this timer to simulate the exam.
+      </p>
+      <div class="timer reveal" data-delay="180" data-timer data-timer-minutes="20">
+        <div class="timer-display" data-timer-display></div>
+        <div class="timer-controls">
+          <button type="button" data-timer-action="start">Start</button>
+          <button type="button" data-timer-action="pause">Pause</button>
+          <button type="button" data-timer-action="reset">Reset</button>
+          <label>Minutes
+            <input type="number" min="5" max="60" value="20" data-timer-input>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container">
       <h2 class="reveal">CAPM Calculator</h2>
       <p class="section-intro reveal" data-delay="120">
-        Use this to sanity-check betas and implied expected returns on the fly.
+        Use this to sanity-check betas and implied expected returns.
       </p>
       <div class="method-card reveal" data-delay="180" data-calc="capm">
         <div class="calc-grid">
@@ -152,7 +222,7 @@
       <div class="accordion reveal" data-delay="160">
         <div class="accordion-item">
           <button class="accordion-button" data-accordion-toggle aria-expanded="false">
-            Problem A: Full CAPM derivation <span>+</span>
+            Problem A: Full CAPM derivation <span data-accordion-icon>+</span>
           </button>
           <div class="accordion-panel">
             <p>Write the mean-variance objective, solve the FOC, identify the tangency portfolio,
@@ -162,7 +232,7 @@
         </div>
         <div class="accordion-item">
           <button class="accordion-button" data-accordion-toggle aria-expanded="false">
-            Problem B: CAPM from an SDF <span>+</span>
+            Problem B: CAPM from an SDF <span data-accordion-icon>+</span>
           </button>
           <div class="accordion-panel">
             <p>Start from \(\E[mR_i]=1\). Use covariance decomposition to isolate \(\E[R_i]-R_f\),
@@ -171,7 +241,7 @@
         </div>
         <div class="accordion-item">
           <button class="accordion-button" data-accordion-toggle aria-expanded="false">
-            Problem C: Zero-beta CAPM <span>+</span>
+            Problem C: Zero-beta CAPM <span data-accordion-icon>+</span>
           </button>
           <div class="accordion-panel">
             <p>No risk-free asset? Derive \(\E[R_i] = \E[R_Z] + \beta_i^Z(\E[R_M]-\E[R_Z])\),
@@ -180,7 +250,7 @@
         </div>
         <div class="accordion-item">
           <button class="accordion-button" data-accordion-toggle aria-expanded="false">
-            Problem D: Factor model nesting <span>+</span>
+            Problem D: Factor model nesting <span data-accordion-icon>+</span>
           </button>
           <div class="accordion-panel">
             <p>Show how the CAPM is the one-factor case of \(\E[R_i] = R_f + \beta_i'\lambda\).
