@@ -1,0 +1,134 @@
+%!TEX program = xelatex
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\setlength{\parskip}{6pt}
+\setlength{\parindent}{0pt}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+
+\title{AP-02 Notes: CAPM and SDF Foundations}
+\author{Dr. Ian Helfrich}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Purpose of These Notes}
+These notes are the ``book version'' of AP-02. The slides are the live exam walkthrough.
+This document is the full derivation with commentary and structure.
+
+\section*{Mean-Variance Setup}
+Consider $N$ risky returns $R \in \R^N$ with mean $\mu$ and covariance $\Sigma$.
+A risk-free asset yields gross return $R_f$.
+A portfolio with risky weights $w$ has return
+\[
+R_p = R_f + w'(R - R_f\mathbf{1}).
+\]
+Then
+\begin{align*}
+\E[R_p] &= R_f + w'(\mu - R_f\mathbf{1}), \\
+\Var(R_p) &= w'\Sigma w.
+\end{align*}
+
+\section*{Mean-Variance Optimization}
+A mean-variance investor solves
+\[
+\max_w \; \E[R_p] - \frac{\gamma}{2}\Var(R_p).
+\]
+The first-order condition is
+\[
+\mu - R_f\mathbf{1} - \gamma\Sigma w = 0.
+\]
+So optimal risky holdings satisfy
+\[
+ w \propto \Sigma^{-1}(\mu - R_f\mathbf{1}).
+\]
+All investors hold the same risky portfolio up to scale.
+
+\section*{Market Clearing and the CAPM}
+In equilibrium, the market portfolio $M$ must be mean-variance efficient.
+Let $w_M$ denote market weights. Then for some scalar $\kappa$,
+\[
+\Sigma w_M = \kappa(\mu - R_f\mathbf{1}).
+\]
+Take the $i$th element:
+\[
+(\Sigma w_M)_i = \kappa(\mu_i - R_f).
+\]
+But $(\Sigma w_M)_i = \Cov(R_i, R_M)$, so
+\[
+\mu_i - R_f = \frac{1}{\kappa}\Cov(R_i, R_M).
+\]
+Apply the same equation to the market itself:
+\[
+\mu_M - R_f = \frac{1}{\kappa}\Var(R_M).
+\]
+Divide to obtain the CAPM:
+\[
+\E[R_i] - R_f = \beta_i(\E[R_M] - R_f),
+\quad \beta_i = \frac{\Cov(R_i, R_M)}{\Var(R_M)}.
+\]
+
+\section*{SDF Derivation}
+The stochastic discount factor (SDF) $m$ satisfies
+\[
+\E[m R_i] = 1
+\]
+for every asset $i$.
+Assume a linear SDF:
+\[
+ m = a - b R_M.
+\]
+Use covariance decomposition:
+\begin{align*}
+\E[m R_i] &= \E[m]\E[R_i] + \Cov(m, R_i) = 1, \\
+\E[R_i] - R_f &= -\frac{\Cov(m, R_i)}{\E[m]}.
+\end{align*}
+Since $\Cov(m, R_i) = -b\Cov(R_M, R_i)$,
+\[
+\E[R_i] - R_f = \frac{b}{\E[m]}\Cov(R_i, R_M).
+\]
+Apply the same equation to $R_M$ and divide to recover CAPM.
+
+\section*{Worked Example}
+Let $R_f = 1.02$, $\E[R_M] = 1.10$, $\Var(R_M) = 0.04$, and $\Cov(R_i,R_M) = 0.06$.
+Then
+\[
+\beta_i = \frac{0.06}{0.04} = 1.5
+\]
+and
+\[
+\E[R_i] = 1.02 + 1.5(1.10 - 1.02) = 1.14.
+\]
+
+\section*{Common Pitfalls}
+\begin{itemize}[leftmargin=18pt]
+\item Confusing gross returns with net returns.
+\item Forgetting the market portfolio must be efficient.
+\item Dropping the covariance identity $(\Sigma w_M)_i = \Cov(R_i, R_M)$.
+\item Mixing up correlation and beta.
+\end{itemize}
+
+\section*{Exam Checklist}
+\begin{enumerate}[leftmargin=18pt]
+\item Write the mean-variance FOC and solve for $w$.
+\item Use market clearing to identify $w_M$.
+\item Convert to the covariance form and solve for $\beta_i$.
+\item Derive CAPM again from the SDF pricing equation.
+\end{enumerate}
+
+\section*{Instructor Note}
+I am an independent researcher and PhD (Georgia Institute of Technology), not currently affiliated
+with any institution. These notes are my own work.
+
+\end{document}

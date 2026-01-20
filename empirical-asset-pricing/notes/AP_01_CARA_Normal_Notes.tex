@@ -1,0 +1,144 @@
+%!TEX program = xelatex
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\setlength{\parskip}{6pt}
+\setlength{\parindent}{0pt}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+
+\title{AP-01 Notes: CARA-Normal Equilibrium}
+\author{Dr. Ian Helfrich}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Purpose of These Notes}
+These notes are the ``book version'' of the AP-01 slides. The slides are the live, exam-style
+walkthrough. This document is the slow, careful write-up: every definition, every equation,
+and every step I expect you to reproduce under pressure.
+
+\section*{Setup}
+We study a one-period economy with $N$ risky payoffs collected in the vector $X$.
+Assume
+\[
+X \sim \mathcal{N}(\mu, \Sigma).
+\]
+Agents have CARA utility
+\[
+U(c) = -\exp(-\alpha c), \quad \alpha > 0.
+\]
+Let $p \in \R^N$ be the price vector of the risky payoffs, and let $\theta \in \R^N$ denote
+a portfolio of risky payoffs.
+
+Final wealth can be written as
+\[
+c = w_0 - p'\theta + \theta'X.
+\]
+
+\section*{Certainty Equivalent Under CARA + Normal}
+The key move is that CARA utility and normality turn expected utility into a certainty equivalent.
+If $c$ is normal, then
+\[
+\E[U(c)] = -\exp\left(-\alpha\E[c] + \frac{\alpha^2}{2}\Var(c)\right).
+\]
+Thus maximizing expected utility is equivalent to maximizing the certainty equivalent
+\[
+CE = \E[c] - \frac{\alpha}{2}\Var(c).
+\]
+This is the algebraic bridge to mean-variance reasoning.
+
+\section*{Individual Demand}
+Compute the mean and variance of $c$:
+\begin{align*}
+\E[c] &= w_0 - p'\theta + \theta'\mu, \\
+\Var(c) &= \theta'\Sigma\theta.
+\end{align*}
+So the certainty equivalent is
+\[
+CE = w_0 - p'\theta + \theta'\mu - \frac{\alpha}{2}\theta'\Sigma\theta.
+\]
+Differentiate with respect to $\theta$ and set equal to zero:
+\[
+- p + \mu - \alpha\Sigma\theta = 0.
+\]
+Solve for optimal demand:
+\[
+\theta^* = \frac{1}{\alpha}\Sigma^{-1}(\mu - p).
+\]
+
+\section*{Aggregate Risk Tolerance}
+Let agent $h$ have risk aversion $\alpha_h$. Summing demands gives
+\[
+\sum_h \theta_h^* = \left(\sum_h \frac{1}{\alpha_h}\right)\Sigma^{-1}(\mu - p).
+\]
+Define total risk tolerance
+\[
+T = \sum_h \frac{1}{\alpha_h}.
+\]
+Then aggregate demand is
+\[
+\sum_h \theta_h^* = T\Sigma^{-1}(\mu - p).
+\]
+
+\section*{Market Clearing and Equilibrium Price}
+Let $\bar{\theta}$ be the supply vector of risky payoffs. Market clearing requires
+\[
+\bar{\theta} = T\Sigma^{-1}(\mu - p).
+\]
+Solve for $p$:
+\[
+ p = \mu - \frac{1}{T}\Sigma\bar{\theta}.
+\]
+This is the equilibrium price formula.
+
+\section*{Risk Premia and Interpretation}
+Rewrite the price equation as
+\[
+\mu - p = \frac{1}{T}\Sigma\bar{\theta}.
+\]
+The expected excess payoff $\mu - p$ is proportional to covariance with aggregate risk,
+scaled by the price of risk $1/T$.
+
+Intuition:
+\begin{itemize}[leftmargin=18pt]
+\item Larger $T$ (more risk tolerance in the economy) raises prices and lowers premia.
+\item Greater aggregate risk exposure $\bar{\theta}$ lowers prices and raises premia.
+\item Only systematic risk --- the part aligned with aggregate exposure --- is priced.
+\end{itemize}
+
+\section*{Worked Numerical Example}
+Suppose a single risky payoff has
+\[
+\mu = 1.08, \quad \sigma^2 = 0.04, \quad p = 1.02, \quad \alpha = 2.
+\]
+Then
+\[
+\theta^* = \frac{\mu - p}{\alpha\sigma^2} = \frac{0.06}{2 \cdot 0.04} = 0.75.
+\]
+If aggregate risk tolerance doubles, the risk premium halves.
+
+\section*{Exam Checklist}
+Before you walk into the exam, make sure you can do the following without notes:
+\begin{enumerate}[leftmargin=18pt]
+\item Derive the certainty equivalent for CARA utility with normal payoffs.
+\item Compute the demand vector and explain each term.
+\item Aggregate demands and solve for equilibrium prices.
+\item Interpret the risk premium as a covariance with aggregate exposure.
+\end{enumerate}
+
+\section*{Instructor Note}
+I am an independent researcher and PhD (Georgia Institute of Technology), not currently affiliated
+with any institution. These notes are my own work.
+
+\end{document}
