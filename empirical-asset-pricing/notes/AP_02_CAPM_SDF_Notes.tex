@@ -24,11 +24,18 @@
 \maketitle
 
 \section*{Purpose of These Notes}
-These notes are the ``book version'' of AP-02. The slides are the live exam walkthrough.
-This document is the full derivation with commentary and structure.
+These notes are the ``book version'' of AP-02. The slides are the live walkthrough.
+Here I write the CAPM derivation twice and keep the logic tight.
 
-\section*{Mean-Variance Setup}
-Consider $N$ risky returns $R \in \R^N$ with mean $\mu$ and covariance $\Sigma$.
+\section*{Roadmap}
+\begin{enumerate}[leftmargin=18pt]
+\item Derive CAPM from mean-variance optimization.
+\item Re-derive CAPM from the SDF pricing equation.
+\item Connect to zero-beta CAPM and factor models.
+\end{enumerate}
+
+\section*{1. Mean-Variance Setup}
+Let $R \in \R^N$ be risky returns with mean $\mu$ and covariance $\Sigma$.
 A risk-free asset yields gross return $R_f$.
 A portfolio with risky weights $w$ has return
 \[
@@ -40,7 +47,7 @@ Then
 \Var(R_p) &= w'\Sigma w.
 \end{align*}
 
-\section*{Mean-Variance Optimization}
+\section*{2. Mean-Variance Optimization}
 A mean-variance investor solves
 \[
 \max_w \; \E[R_p] - \frac{\gamma}{2}\Var(R_p).
@@ -55,7 +62,7 @@ So optimal risky holdings satisfy
 \]
 All investors hold the same risky portfolio up to scale.
 
-\section*{Market Clearing and the CAPM}
+\section*{3. Market Clearing and the CAPM}
 In equilibrium, the market portfolio $M$ must be mean-variance efficient.
 Let $w_M$ denote market weights. Then for some scalar $\kappa$,
 \[
@@ -79,7 +86,12 @@ Divide to obtain the CAPM:
 \quad \beta_i = \frac{\Cov(R_i, R_M)}{\Var(R_M)}.
 \]
 
-\section*{SDF Derivation}
+\section*{4. Geometric Interpretation}
+The efficient frontier with a risk-free asset becomes a straight line (the capital market line).
+The tangency portfolio on the risky frontier is the market portfolio.
+CAPM is the security market line: expected returns are linear in betas.
+
+\section*{5. SDF Derivation}
 The stochastic discount factor (SDF) $m$ satisfies
 \[
 \E[m R_i] = 1
@@ -100,31 +112,65 @@ Since $\Cov(m, R_i) = -b\Cov(R_M, R_i)$,
 \]
 Apply the same equation to $R_M$ and divide to recover CAPM.
 
-\section*{Worked Example}
+\section*{6. Zero-Beta CAPM}
+If no risk-free asset exists, CAPM becomes
+\[
+\E[R_i] = \E[R_Z] + \beta_i^Z(\E[R_M] - \E[R_Z]),
+\]
+where $R_Z$ is the return on the zero-beta portfolio.
+This is a common qualifier extension.
+
+\section*{7. From CAPM to Factor Models}
+CAPM is a one-factor model. Empirical work often uses
+\[
+\E[R_i] = R_f + \beta_{i1}\lambda_1 + \cdots + \beta_{ik}\lambda_k.
+\]
+CAPM is the special case $k=1$ with the market factor.
+
+\section*{8. Worked Examples}
+\textbf{Example 1 (Beta and Expected Return).}
 Let $R_f = 1.02$, $\E[R_M] = 1.10$, $\Var(R_M) = 0.04$, and $\Cov(R_i,R_M) = 0.06$.
 Then
 \[
-\beta_i = \frac{0.06}{0.04} = 1.5
-\]
-and
-\[
-\E[R_i] = 1.02 + 1.5(1.10 - 1.02) = 1.14.
+\beta_i = \frac{0.06}{0.04} = 1.5,
+\quad \E[R_i] = 1.02 + 1.5(1.10 - 1.02) = 1.14.
 \]
 
-\section*{Common Pitfalls}
+\textbf{Example 2 (From Covariance Matrix).}
+Let
+\[
+\Sigma = \begin{bmatrix}0.04 & 0.01 \\ 0.01 & 0.09\end{bmatrix},
+\quad w_M = \begin{bmatrix}0.6 \\ 0.4\end{bmatrix}.
+\]
+Then
+\[
+\Var(R_M) = w_M'\Sigma w_M = 0.0432,
+\quad \Cov(R_1,R_M) = 0.028,
+\]
+so $\beta_1 \approx 0.648$.
+
+\section*{9. Common Pitfalls}
 \begin{itemize}[leftmargin=18pt]
 \item Confusing gross returns with net returns.
-\item Forgetting the market portfolio must be efficient.
+\item Forgetting that the market portfolio must be efficient.
 \item Dropping the covariance identity $(\Sigma w_M)_i = \Cov(R_i, R_M)$.
-\item Mixing up correlation and beta.
+\item Mixing up correlation with beta.
 \end{itemize}
 
-\section*{Exam Checklist}
+\section*{10. Exam Checklist}
 \begin{enumerate}[leftmargin=18pt]
 \item Write the mean-variance FOC and solve for $w$.
 \item Use market clearing to identify $w_M$.
 \item Convert to the covariance form and solve for $\beta_i$.
 \item Derive CAPM again from the SDF pricing equation.
+\item State the zero-beta CAPM extension.
+\end{enumerate}
+
+\section*{11. Practice Problems}
+\begin{enumerate}[leftmargin=18pt]
+\item Prove CAPM using only the covariance identity and market efficiency.
+\item Derive $a$ and $b$ for the linear SDF from the risk-free asset and market equations.
+\item Explain how CAPM nests inside a two-factor model and how you would test it.
 \end{enumerate}
 
 \section*{Instructor Note}

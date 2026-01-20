@@ -24,11 +24,20 @@
 \maketitle
 
 \section*{Purpose of These Notes}
-These notes are the ``book version'' of the AP-01 slides. The slides are the live, exam-style
-walkthrough. This document is the slow, careful write-up: every definition, every equation,
-and every step I expect you to reproduce under pressure.
+These notes are the ``book version'' of AP-01. The slides are the live, exam-style walkthrough.
+Here I slow down and write every step I expect you to reproduce under time pressure.
 
-\section*{Setup}
+\section*{Roadmap}
+We will:
+\begin{enumerate}[leftmargin=18pt]
+\item Set up a one-period CARA-normal economy.
+\item Derive the certainty equivalent and show the mean-variance form.
+\item Solve the individual demand problem.
+\item Aggregate demands and clear the market.
+\item Interpret the equilibrium price and the risk premium.
+\end{enumerate}
+
+\section*{1. Setup}
 We study a one-period economy with $N$ risky payoffs collected in the vector $X$.
 Assume
 \[
@@ -38,37 +47,43 @@ Agents have CARA utility
 \[
 U(c) = -\exp(-\alpha c), \quad \alpha > 0.
 \]
-Let $p \in \R^N$ be the price vector of the risky payoffs, and let $\theta \in \R^N$ denote
-a portfolio of risky payoffs.
+Let $p \in \R^N$ be the price vector of risky payoffs. A portfolio is a vector of holdings
+$\theta \in \R^N$.
 
-Final wealth can be written as
+Final wealth is
 \[
 c = w_0 - p'\theta + \theta'X.
 \]
 
-\section*{Certainty Equivalent Under CARA + Normal}
-The key move is that CARA utility and normality turn expected utility into a certainty equivalent.
-If $c$ is normal, then
+\section*{2. CARA + Normal Implies a Certainty Equivalent}
+Key fact: if $Y \sim \mathcal{N}(m, s^2)$, then
+\[
+\E[\exp(-\alpha Y)] = \exp\left(-\alpha m + \frac{\alpha^2}{2}s^2\right).
+\]
+Proof sketch: the moment generating function of a normal variable gives
+\(\E[\exp(tY)] = \exp(tm + \tfrac{1}{2}t^2 s^2)\). Set $t=-\alpha$.
+
+Therefore, if $c$ is normal,
 \[
 \E[U(c)] = -\exp\left(-\alpha\E[c] + \frac{\alpha^2}{2}\Var(c)\right).
 \]
-Thus maximizing expected utility is equivalent to maximizing the certainty equivalent
+Maximizing expected utility is equivalent to maximizing the certainty equivalent
 \[
 CE = \E[c] - \frac{\alpha}{2}\Var(c).
 \]
-This is the algebraic bridge to mean-variance reasoning.
+This is why CARA-normal problems become mean-variance problems.
 
-\section*{Individual Demand}
-Compute the mean and variance of $c$:
+\section*{3. Individual Demand}
+Compute mean and variance:
 \begin{align*}
 \E[c] &= w_0 - p'\theta + \theta'\mu, \\
 \Var(c) &= \theta'\Sigma\theta.
 \end{align*}
-So the certainty equivalent is
+So
 \[
 CE = w_0 - p'\theta + \theta'\mu - \frac{\alpha}{2}\theta'\Sigma\theta.
 \]
-Differentiate with respect to $\theta$ and set equal to zero:
+Differentiate with respect to $\theta$ and set to zero:
 \[
 - p + \mu - \alpha\Sigma\theta = 0.
 \]
@@ -77,8 +92,11 @@ Solve for optimal demand:
 \theta^* = \frac{1}{\alpha}\Sigma^{-1}(\mu - p).
 \]
 
-\section*{Aggregate Risk Tolerance}
-Let agent $h$ have risk aversion $\alpha_h$. Summing demands gives
+Interpretation: demand is increasing in expected payoff $\mu$, decreasing in price $p$,
+and scaled down by risk aversion and covariance risk.
+
+\section*{4. Aggregate Risk Tolerance}
+Let agent $h$ have risk aversion $\alpha_h$. Summing demands yields
 \[
 \sum_h \theta_h^* = \left(\sum_h \frac{1}{\alpha_h}\right)\Sigma^{-1}(\mu - p).
 \]
@@ -91,50 +109,70 @@ Then aggregate demand is
 \sum_h \theta_h^* = T\Sigma^{-1}(\mu - p).
 \]
 
-\section*{Market Clearing and Equilibrium Price}
-Let $\bar{\theta}$ be the supply vector of risky payoffs. Market clearing requires
+\section*{5. Market Clearing and Equilibrium Price}
+Let $\bar{\theta}$ be the fixed supply of risky payoffs. Market clearing implies
 \[
 \bar{\theta} = T\Sigma^{-1}(\mu - p).
 \]
-Solve for $p$:
+Solve for price:
 \[
  p = \mu - \frac{1}{T}\Sigma\bar{\theta}.
 \]
-This is the equilibrium price formula.
+This is the equilibrium pricing equation.
 
-\section*{Risk Premia and Interpretation}
-Rewrite the price equation as
+\section*{6. Risk Premia and Interpretation}
+Rewrite as
 \[
 \mu - p = \frac{1}{T}\Sigma\bar{\theta}.
 \]
-The expected excess payoff $\mu - p$ is proportional to covariance with aggregate risk,
-scaled by the price of risk $1/T$.
+Thus expected excess payoffs are proportional to covariance with aggregate risk.
+The scalar $1/T$ is the price of risk.
 
-Intuition:
+Economic intuition:
 \begin{itemize}[leftmargin=18pt]
-\item Larger $T$ (more risk tolerance in the economy) raises prices and lowers premia.
-\item Greater aggregate risk exposure $\bar{\theta}$ lowers prices and raises premia.
-\item Only systematic risk --- the part aligned with aggregate exposure --- is priced.
+\item Larger $T$ (more risk tolerance) raises prices and lowers premia.
+\item Higher aggregate risk exposure $\bar{\theta}$ lowers prices.
+\item Only systematic risk matters; idiosyncratic risk washes out in aggregation.
 \end{itemize}
 
-\section*{Worked Numerical Example}
-Suppose a single risky payoff has
+\section*{7. Worked Example (Two Assets)}
+Let
 \[
-\mu = 1.08, \quad \sigma^2 = 0.04, \quad p = 1.02, \quad \alpha = 2.
+\mu = \begin{bmatrix}1.08 \\ 1.12\end{bmatrix}, \quad
+\Sigma = \begin{bmatrix}0.04 & 0.01 \\ 0.01 & 0.09\end{bmatrix}, \quad
+\bar{\theta} = \begin{bmatrix}1 \\ 1\end{bmatrix}, \quad T = 2.
+\]
+Compute
+\[
+\Sigma\bar{\theta} = \begin{bmatrix}0.05 \\ 0.10\end{bmatrix}.
 \]
 Then
 \[
-\theta^* = \frac{\mu - p}{\alpha\sigma^2} = \frac{0.06}{2 \cdot 0.04} = 0.75.
+ p = \mu - \frac{1}{2}\begin{bmatrix}0.05 \\ 0.10\end{bmatrix}
+= \begin{bmatrix}1.055 \\ 1.07\end{bmatrix}.
 \]
-If aggregate risk tolerance doubles, the risk premium halves.
 
-\section*{Exam Checklist}
-Before you walk into the exam, make sure you can do the following without notes:
+\section*{8. Comparative Statics}
+\begin{itemize}[leftmargin=18pt]
+\item If $T$ doubles, risk premia halve.
+\item If $\Sigma$ increases (more risk), prices fall.
+\item If supply $\bar{\theta}$ rises, prices fall proportionally to risk exposure.
+\end{itemize}
+
+\section*{9. Exam Checklist}
+Before exam day, you should be able to do the following without notes:
 \begin{enumerate}[leftmargin=18pt]
-\item Derive the certainty equivalent for CARA utility with normal payoffs.
-\item Compute the demand vector and explain each term.
+\item Derive the certainty equivalent for CARA utility under normality.
+\item Compute the demand vector and interpret each term.
 \item Aggregate demands and solve for equilibrium prices.
-\item Interpret the risk premium as a covariance with aggregate exposure.
+\item Translate prices into expected excess payoffs and interpret risk premia.
+\end{enumerate}
+
+\section*{10. Practice Problems}
+\begin{enumerate}[leftmargin=18pt]
+\item Single asset: derive $\theta^*$ and solve for $p$ given $\bar{\theta} = 1$.
+\item Two agents: compute $T$ with $\alpha_1=1$ and $\alpha_2=2$ and solve for $p$.
+\item Comparative statics: show how $p$ changes when $\Sigma$ doubles.
 \end{enumerate}
 
 \section*{Instructor Note}
