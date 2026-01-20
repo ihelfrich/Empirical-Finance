@@ -16,28 +16,26 @@
 \newcommand{\Var}{\mathrm{Var}}
 \newcommand{\Cov}{\mathrm{Cov}}
 
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+
 \title{AP-02 Notes: CAPM and SDF Foundations}
 \author{Dr. Ian Helfrich}
 \date{\today}
 
 \begin{document}
 \maketitle
+\tableofcontents
+\newpage
 
-\section*{Purpose of These Notes}
+\section{Purpose and Style}
 These notes are the ``book version'' of AP-02. The slides are the live walkthrough.
-Here I write the CAPM derivation twice and keep the logic tight.
+Here I derive the CAPM twice and keep the logic tight.
 
-\section*{Roadmap}
-\begin{enumerate}[leftmargin=18pt]
-\item Derive CAPM from mean-variance optimization.
-\item Re-derive CAPM from the SDF pricing equation.
-\item Connect to zero-beta CAPM and factor models.
-\end{enumerate}
-
-\section*{1. Mean-Variance Setup}
+\section{Mean-Variance Setup}
 Let $R \in \R^N$ be risky returns with mean $\mu$ and covariance $\Sigma$.
-A risk-free asset yields gross return $R_f$.
-A portfolio with risky weights $w$ has return
+A risk-free asset yields gross return $R_f$. A portfolio with risky weights $w$ has
 \[
 R_p = R_f + w'(R - R_f\mathbf{1}).
 \]
@@ -47,7 +45,7 @@ Then
 \Var(R_p) &= w'\Sigma w.
 \end{align*}
 
-\section*{2. Mean-Variance Optimization}
+\section{Mean-Variance Optimization}
 A mean-variance investor solves
 \[
 \max_w \; \E[R_p] - \frac{\gamma}{2}\Var(R_p).
@@ -62,7 +60,7 @@ So optimal risky holdings satisfy
 \]
 All investors hold the same risky portfolio up to scale.
 
-\section*{3. Market Clearing and the CAPM}
+\section{Market Clearing and the CAPM}
 In equilibrium, the market portfolio $M$ must be mean-variance efficient.
 Let $w_M$ denote market weights. Then for some scalar $\kappa$,
 \[
@@ -86,17 +84,31 @@ Divide to obtain the CAPM:
 \quad \beta_i = \frac{\Cov(R_i, R_M)}{\Var(R_M)}.
 \]
 
-\section*{4. Geometric Interpretation}
+\begin{theorem}[CAPM from mean-variance]
+If a risk-free asset exists and investors are mean-variance optimizers, then
+\[
+\E[R_i] - R_f = \beta_i(\E[R_M] - R_f).
+\]
+\end{theorem}
+\begin{proof}
+The steps above show that $\Sigma w_M$ is proportional to $\mu - R_f\mathbf{1}$.
+Convert to covariance form, apply the equation to the market, and divide.
+\end{proof}
+
+\section{Geometric Interpretation}
 The efficient frontier with a risk-free asset becomes a straight line (the capital market line).
 The tangency portfolio on the risky frontier is the market portfolio.
 CAPM is the security market line: expected returns are linear in betas.
 
-\section*{5. SDF Derivation}
-The stochastic discount factor (SDF) $m$ satisfies
+\section{SDF Derivation}
+\begin{definition}[Stochastic discount factor]
+A stochastic discount factor (SDF) $m$ satisfies
 \[
 \E[m R_i] = 1
 \]
 for every asset $i$.
+\end{definition}
+
 Assume a linear SDF:
 \[
  m = a - b R_M.
@@ -112,23 +124,143 @@ Since $\Cov(m, R_i) = -b\Cov(R_M, R_i)$,
 \]
 Apply the same equation to $R_M$ and divide to recover CAPM.
 
-\section*{6. Zero-Beta CAPM}
+\begin{theorem}[CAPM from the SDF]
+If the SDF is linear in the market return, then CAPM holds.
+\end{theorem}
+\begin{proof}
+Use the covariance decomposition above and divide by the market equation.
+\end{proof}
+
+\section{Solving for $a$ and $b$ in the Linear SDF}
+The two key equations are
+\[
+R_f \E[m] = 1, \quad \E[m R_M] = 1.
+\]
+With $m = a - b R_M$, this becomes
+\begin{align*}
+R_f(a - b\E[R_M]) &= 1, \\
+ a\E[R_M] - b\E[R_M^2] &= 1.
+\end{align*}
+This is a two-by-two linear system. Solve for $(a,b)$ and substitute back into the pricing equation.
+
+\section{Zero-Beta CAPM}
 If no risk-free asset exists, CAPM becomes
 \[
 \E[R_i] = \E[R_Z] + \beta_i^Z(\E[R_M] - \E[R_Z]),
 \]
 where $R_Z$ is the return on the zero-beta portfolio.
-This is a common qualifier extension.
 
-\section*{7. From CAPM to Factor Models}
+\section{From CAPM to Factor Models}
 CAPM is a one-factor model. Empirical work often uses
 \[
 \E[R_i] = R_f + \beta_{i1}\lambda_1 + \cdots + \beta_{ik}\lambda_k.
 \]
 CAPM is the special case $k=1$ with the market factor.
 
-\section*{8. Worked Examples}
-\textbf{Example 1 (Beta and Expected Return).}
+\section{Cross-Sectional Regression Form}
+If CAPM holds, then for each asset $i$,
+\[
+\E[R_i] - R_f = \beta_i \lambda_M,
+\quad \lambda_M = \E[R_M] - R_f.
+\]
+Empirically, this becomes a cross-sectional regression of average excess returns on betas.
+This is the link to Fama-MacBeth.
+
+\section{Time-Series Beta Estimation}
+In practice, betas are estimated from time-series regressions:
+\[
+R_{i,t} - R_{f,t} = \alpha_i + \beta_i (R_{M,t} - R_{f,t}) + \varepsilon_{i,t}.
+\]
+CAPM predicts $\alpha_i = 0$ for all assets. This is a central empirical test.
+
+\section{Pricing Errors and Alphas}
+If CAPM fails, then expected returns satisfy
+\[
+\E[R_i] - R_f = \beta_i \lambda_M + \alpha_i,
+\]
+where $\alpha_i$ is a pricing error. In empirical work, persistent nonzero $\alpha_i$
+signal model misspecification or measurement issues.
+
+\section{Tangency Portfolio via Lagrange Multipliers}
+Solve the tangency portfolio directly. Let $w$ be risky weights and impose $w'\mathbf{1}=1$.
+Maximize the Sharpe ratio or equivalently
+\[
+\max_w \\; w'(\mu - R_f\mathbf{1}) - \frac{\gamma}{2} w'\Sigma w
+\quad \text{s.t. } w'\mathbf{1}=1.
+\]
+The Lagrangian is
+\[
+\mathcal{L}(w, \lambda) = w'(\mu - R_f\mathbf{1}) - \frac{\gamma}{2} w'\Sigma w + \lambda(1 - w'\mathbf{1}).
+\]
+FOC:
+\[
+\mu - R_f\mathbf{1} - \gamma\Sigma w - \lambda\mathbf{1} = 0.
+\]
+Solve for $w$ and normalize. This yields the tangency portfolio and the capital market line.
+
+\section{Two-Fund Separation}
+Because all investors hold the same tangency portfolio up to scale,
+any mean-variance investor holds a combination of the risk-free asset and $M$.
+This is two-fund separation and is central to the CAPM logic.
+
+\section{Security Market Line}
+CAPM implies a linear relationship between expected excess returns and beta:
+\[
+\E[R_i] - R_f = \beta_i(\E[R_M]-R_f).
+\]
+This line is the security market line. The slope is the market risk premium.
+Assets above the line have positive alpha; assets below the line have negative alpha.
+
+\section{Hansen-Jagannathan Bound (Optional)}
+The SDF $m$ implies a bound on Sharpe ratios:
+\[
+\frac{\E[R_p] - R_f}{\sqrt{\Var(R_p)}} \le \frac{\sqrt{\Var(m)}}{\E[m]}.
+\]
+This connects asset pricing restrictions to volatility of the discount factor.
+You can view CAPM as a specific SDF that enforces a single-factor bound.
+
+\section{Qualifier-Style Problem A (Full Walkthrough)}
+\textbf{Problem.} Assume mean-variance preferences and a risk-free asset. Derive the CAPM
+and interpret $\beta_i$.
+
+\subsection*{Solution}
+Step 1. Write the mean-variance objective and FOC:
+\[
+\mu - R_f\mathbf{1} - \gamma\Sigma w = 0.
+\]
+Step 2. Identify the market portfolio by market clearing and write
+\[
+\Sigma w_M = \kappa(\mu - R_f\mathbf{1}).
+\]
+Step 3. Convert to covariance form: $(\Sigma w_M)_i = \Cov(R_i,R_M)$.
+Step 4. Solve for $\kappa$ using the market itself and obtain CAPM.
+
+\section{Qualifier-Style Problem B (SDF)}
+\textbf{Problem.} Suppose prices satisfy $\E[mR_i]=1$ and $m=a-bR_M$. Prove the CAPM.
+
+\subsection*{Solution}
+Use covariance decomposition:
+\[
+\E[R_i]-R_f = -\frac{\Cov(m,R_i)}{\E[m]}.
+\]
+Substitute $m=a-bR_M$ to get
+\[
+\E[R_i]-R_f = \frac{b}{\E[m]}\Cov(R_i,R_M).
+\]
+Apply the same equation to $R_M$ and divide to obtain CAPM.
+
+\section{Qualifier-Style Problem C (Empirical Test)}
+\textbf{Problem.} You estimate time-series betas for 25 portfolios. You then run a
+cross-sectional regression of average excess returns on betas and obtain a large intercept.
+Interpret the result in the context of CAPM.
+
+\subsection*{Solution}
+CAPM predicts zero intercept and slope equal to the market risk premium. A large intercept
+signals pricing errors or a missing factor. It can also arise from measurement error in betas
+or a flawed market proxy. The correct qualifier answer ties the intercept to model failure.
+
+\section{Worked Examples}
+\subsection*{Example 1: Beta and Expected Return}
 Let $R_f = 1.02$, $\E[R_M] = 1.10$, $\Var(R_M) = 0.04$, and $\Cov(R_i,R_M) = 0.06$.
 Then
 \[
@@ -136,7 +268,7 @@ Then
 \quad \E[R_i] = 1.02 + 1.5(1.10 - 1.02) = 1.14.
 \]
 
-\textbf{Example 2 (From Covariance Matrix).}
+\subsection*{Example 2: From Covariance Matrix}
 Let
 \[
 \Sigma = \begin{bmatrix}0.04 & 0.01 \\ 0.01 & 0.09\end{bmatrix},
@@ -149,29 +281,96 @@ Then
 \]
 so $\beta_1 \approx 0.648$.
 
-\section*{9. Common Pitfalls}
+\subsection*{Example 3: SDF Parameters}
+Let $R_f = 1.01$, $\E[R_M]=1.08$, and $\E[R_M^2]=1.20$.
+Solve
+$R_f(a-b\E[R_M])=1$ and $a\E[R_M]-b\E[R_M^2]=1$ for $(a,b)$.
+Then compute $m=a-bR_M$.
+
+\subsection*{Example 4: Alpha Check}
+Suppose an asset has $\beta_i = 0.8$ and average excess return $0.06$.
+If the market risk premium is $0.08$, CAPM predicts $0.8 \\times 0.08 = 0.064$.
+The pricing error is $\alpha_i = 0.06 - 0.064 = -0.004$.
+In words: this asset earns too little for its beta.
+
+\section{Step-by-Step Blueprint (Exam Edition)}
+When time is tight, follow this exact structure:
+\begin{enumerate}[leftmargin=18pt]
+\item Write the mean-variance objective and the FOC.
+\item State that the market portfolio is the tangency portfolio.
+\item Use $\Sigma w_M = \kappa(\mu - R_f\mathbf{1})$.
+\item Convert to covariance form and solve for $\kappa$ using the market.
+\item Conclude CAPM and interpret $\beta_i$.
+\item Re-derive from the SDF in two lines as a check.
+\end{enumerate}
+
+\section{Common Pitfalls}
 \begin{itemize}[leftmargin=18pt]
 \item Confusing gross returns with net returns.
 \item Forgetting that the market portfolio must be efficient.
 \item Dropping the covariance identity $(\Sigma w_M)_i = \Cov(R_i, R_M)$.
 \item Mixing up correlation with beta.
+\item Treating the CAPM as an empirical truth instead of an equilibrium benchmark.
 \end{itemize}
 
-\section*{10. Exam Checklist}
+\section{Exam Checklist}
 \begin{enumerate}[leftmargin=18pt]
 \item Write the mean-variance FOC and solve for $w$.
 \item Use market clearing to identify $w_M$.
-\item Convert to the covariance form and solve for $\beta_i$.
+\item Convert to covariance form and solve for $\beta_i$.
 \item Derive CAPM again from the SDF pricing equation.
 \item State the zero-beta CAPM extension.
 \end{enumerate}
 
-\section*{11. Practice Problems}
+\section{Practice Problems}
 \begin{enumerate}[leftmargin=18pt]
 \item Prove CAPM using only the covariance identity and market efficiency.
 \item Derive $a$ and $b$ for the linear SDF from the risk-free asset and market equations.
 \item Explain how CAPM nests inside a two-factor model and how you would test it.
+\item Derive the zero-beta CAPM from a mean-variance frontier without $R_f$.
+\item Use the SDF to show why idiosyncratic risk is not priced.
+\item Show how CAPM changes if the market proxy is measured with error.
+\item Derive the tangency portfolio weights explicitly in a two-asset example.
+\item Use the SDF to compute the price of a risk-free asset and verify $R_f = 1/\E[m]$.
 \end{enumerate}
+
+\section{Solutions}
+\subsection*{Solution 1}
+Use $\Sigma w_M = \kappa(\mu - R_f\mathbf{1})$, take element $i$, and apply the same equation to $M$.
+Divide to obtain CAPM.
+
+\subsection*{Solution 2}
+Solve the two equations
+$R_f\E[m] = 1$ and $\E[mR_M]=1$ with $m=a-bR_M$. Substitute
+$\E[m]=a-b\E[R_M]$ and $\E[mR_M]=a\E[R_M]-b\E[R_M^2]$ and solve for $(a,b)$.
+
+\subsection*{Solution 3}
+A two-factor model is $\E[R_i] = R_f + \beta_{i1}\lambda_1 + \beta_{i2}\lambda_2$.
+CAPM is nested by restricting $\lambda_2=0$. Test with a cross-sectional regression or
+GMM on pricing errors.
+
+\subsection*{Solution 4}
+Without $R_f$, the efficient frontier does not intersect the risk-free point.
+The tangent line is replaced by a line through the zero-beta portfolio $Z$ and $M$.
+Thus $\E[R_i] = \E[R_Z] + \beta_i^Z(\E[R_M]-\E[R_Z])$.
+
+\subsection*{Solution 5}
+From $\E[mR_i]=1$, we have
+$\E[R_i]-R_f = -\Cov(m,R_i)/\E[m]$.
+If $R_i$ has only idiosyncratic risk, then $\Cov(m,R_i)=0$ and the premium is zero.
+
+\subsection*{Solution 6}
+Measurement error in $R_M$ biases estimated betas toward zero and can create spurious
+pricing errors. This is a standard empirical pitfall.
+
+\subsection*{Solution 7}
+With two assets, write $\Sigma$ and $\mu$. Solve
+$w \\propto \\Sigma^{-1}(\\mu - R_f\\mathbf{1})$ and normalize to sum to one.
+This is the tangency portfolio.
+
+\subsection*{Solution 8}
+From $\\E[mR_f]=1$ with constant $R_f$, we get $R_f\\E[m]=1$ and thus
+$R_f = 1/\\E[m]$.
 
 \section*{Instructor Note}
 I am an independent researcher and PhD (Georgia Institute of Technology), not currently affiliated

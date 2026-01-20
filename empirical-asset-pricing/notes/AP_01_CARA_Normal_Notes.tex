@@ -16,28 +16,36 @@
 \newcommand{\Var}{\mathrm{Var}}
 \newcommand{\Cov}{\mathrm{Cov}}
 
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+
 \title{AP-01 Notes: CARA-Normal Equilibrium}
 \author{Dr. Ian Helfrich}
 \date{\today}
 
 \begin{document}
 \maketitle
+\tableofcontents
+\newpage
 
-\section*{Purpose of These Notes}
+\section{Purpose and Style}
 These notes are the ``book version'' of AP-01. The slides are the live, exam-style walkthrough.
-Here I slow down and write every step I expect you to reproduce under time pressure.
+Here I slow down and write every step I expect you to reproduce under pressure. I use gross
+returns and payoffs unless I say otherwise.
 
-\section*{Roadmap}
+\section{Roadmap}
 We will:
 \begin{enumerate}[leftmargin=18pt]
 \item Set up a one-period CARA-normal economy.
-\item Derive the certainty equivalent and show the mean-variance form.
-\item Solve the individual demand problem.
+\item Derive the certainty equivalent and show the mean-variance reduction.
+\item Solve the individual demand problem with full matrix calculus.
 \item Aggregate demands and clear the market.
 \item Interpret the equilibrium price and the risk premium.
+\item Work examples and finish with qualifier-style problems and solutions.
 \end{enumerate}
 
-\section*{1. Setup}
+\section{Setup}
 We study a one-period economy with $N$ risky payoffs collected in the vector $X$.
 Assume
 \[
@@ -48,42 +56,70 @@ Agents have CARA utility
 U(c) = -\exp(-\alpha c), \quad \alpha > 0.
 \]
 Let $p \in \R^N$ be the price vector of risky payoffs. A portfolio is a vector of holdings
-$\theta \in \R^N$.
-
-Final wealth is
+$\theta \in \R^N$. Final wealth is
 \[
 c = w_0 - p'\theta + \theta'X.
 \]
 
-\section*{2. CARA + Normal Implies a Certainty Equivalent}
-Key fact: if $Y \sim \mathcal{N}(m, s^2)$, then
+\section{CARA + Normal Implies a Certainty Equivalent}
+\begin{lemma}[Normal moment]
+If $Y \sim \mathcal{N}(m, s^2)$, then
 \[
-\E[\exp(-\alpha Y)] = \exp\left(-\alpha m + \frac{\alpha^2}{2}s^2\right).
+\E[\exp(tY)] = \exp\left(tm + \frac{1}{2}t^2 s^2\right).
 \]
-Proof sketch: the moment generating function of a normal variable gives
-\(\E[\exp(tY)] = \exp(tm + \tfrac{1}{2}t^2 s^2)\). Set $t=-\alpha$.
+\end{lemma}
+\begin{proof}
+This is the standard moment generating function of a normal random variable.
+\end{proof}
 
-Therefore, if $c$ is normal,
+\begin{lemma}[CARA-normal certainty equivalent]
+If $c$ is normal, then
 \[
-\E[U(c)] = -\exp\left(-\alpha\E[c] + \frac{\alpha^2}{2}\Var(c)\right).
+\E[U(c)] = -\exp\left(-\alpha\E[c] + \frac{\alpha^2}{2}\Var(c)\right),
 \]
-Maximizing expected utility is equivalent to maximizing the certainty equivalent
+so maximizing expected utility is equivalent to maximizing
 \[
 CE = \E[c] - \frac{\alpha}{2}\Var(c).
 \]
-This is why CARA-normal problems become mean-variance problems.
+\end{lemma}
+\begin{proof}
+Apply the normal moment formula with $t=-\alpha$.
+\end{proof}
 
-\section*{3. Individual Demand}
+\section{Completing the Square (Explicit Derivation)}
+Write
+\[
+c = m + sZ, \quad Z \sim \mathcal{N}(0,1), \quad m = \E[c], \quad s^2 = \Var(c).
+\]
+Then
+\begin{align*}
+\E[U(c)]
+&= -\E\left[\exp\bigl(-\alpha(m + sZ)\bigr)\right] \\
+&= -\exp(-\alpha m)\,\E\left[\exp(-\alpha s Z)\right] \\
+&= -\exp(-\alpha m)\exp\left(\frac{\alpha^2 s^2}{2}\right).
+\end{align*}
+Taking logs (and ignoring constants) yields the certainty equivalent
+\[
+CE = m - \frac{\alpha}{2}s^2 = \E[c] - \frac{\alpha}{2}\Var(c).
+\]
+
+\section{Individual Demand}
 Compute mean and variance:
 \begin{align*}
 \E[c] &= w_0 - p'\theta + \theta'\mu, \\
 \Var(c) &= \theta'\Sigma\theta.
 \end{align*}
-So
+So the certainty equivalent is
 \[
 CE = w_0 - p'\theta + \theta'\mu - \frac{\alpha}{2}\theta'\Sigma\theta.
 \]
-Differentiate with respect to $\theta$ and set to zero:
+
+\begin{lemma}[Quadratic gradient]
+If $f(\theta) = \tfrac{1}{2}\theta' A \theta$ with symmetric $A$, then
+$\nabla_\theta f(\theta) = A\theta$.
+\end{lemma}
+
+Differentiate and set to zero:
 \[
 - p + \mu - \alpha\Sigma\theta = 0.
 \]
@@ -92,50 +128,107 @@ Solve for optimal demand:
 \theta^* = \frac{1}{\alpha}\Sigma^{-1}(\mu - p).
 \]
 
-Interpretation: demand is increasing in expected payoff $\mu$, decreasing in price $p$,
+\textbf{Interpretation.} Demand is increasing in expected payoff $\mu$, decreasing in price $p$,
 and scaled down by risk aversion and covariance risk.
 
-\section*{4. Aggregate Risk Tolerance}
+\section{Aggregate Risk Tolerance}
 Let agent $h$ have risk aversion $\alpha_h$. Summing demands yields
 \[
 \sum_h \theta_h^* = \left(\sum_h \frac{1}{\alpha_h}\right)\Sigma^{-1}(\mu - p).
 \]
-Define total risk tolerance
+\begin{definition}[Total risk tolerance]
+Define
 \[
 T = \sum_h \frac{1}{\alpha_h}.
 \]
+\end{definition}
 Then aggregate demand is
 \[
 \sum_h \theta_h^* = T\Sigma^{-1}(\mu - p).
 \]
 
-\section*{5. Market Clearing and Equilibrium Price}
-Let $\bar{\theta}$ be the fixed supply of risky payoffs. Market clearing implies
+\section{Market Clearing and Equilibrium Price}
+Let $\bar{\theta}$ be the fixed supply of risky payoffs. Market clearing requires
 \[
 \bar{\theta} = T\Sigma^{-1}(\mu - p).
 \]
-Solve for price:
+Solve for the price vector:
 \[
  p = \mu - \frac{1}{T}\Sigma\bar{\theta}.
 \]
-This is the equilibrium pricing equation.
 
-\section*{6. Risk Premia and Interpretation}
-Rewrite as
+\begin{theorem}[CARA-normal equilibrium price]
+In a CARA-normal economy with aggregate supply $\bar{\theta}$, equilibrium prices satisfy
+\[
+ p = \mu - \frac{1}{T}\Sigma\bar{\theta}.
+\]
+\end{theorem}
+\begin{proof}
+Combine individual demand with market clearing as shown above.
+\end{proof}
+
+\section{Risk Premia and Interpretation}
+Rewrite the equilibrium condition as
 \[
 \mu - p = \frac{1}{T}\Sigma\bar{\theta}.
 \]
 Thus expected excess payoffs are proportional to covariance with aggregate risk.
 The scalar $1/T$ is the price of risk.
 
-Economic intuition:
+\textbf{Economic intuition:}
 \begin{itemize}[leftmargin=18pt]
 \item Larger $T$ (more risk tolerance) raises prices and lowers premia.
 \item Higher aggregate risk exposure $\bar{\theta}$ lowers prices.
 \item Only systematic risk matters; idiosyncratic risk washes out in aggregation.
 \end{itemize}
 
-\section*{7. Worked Example (Two Assets)}
+\section{Pricing Kernel View (Optional)}
+With exponential utility, the (unnormalized) pricing kernel is
+\[
+m(\omega) \propto \exp\bigl(-\alpha c(\omega)\bigr).
+\]
+In a CARA-normal setting, the price formula collapses to a linear covariance adjustment.
+This is the bridge to mean-variance pricing and, later, the CAPM.
+
+\section{Vector Completion of the Square (Full Algebra)}
+Write wealth as $c = w_0 - p'\theta + \theta'X$. Then
+\[
+\E[c] = w_0 - p'\theta + \theta'\mu,
+\quad
+\Var(c) = \theta'\Sigma\theta.
+\]
+The certainty equivalent becomes
+\[
+CE = w_0 - p'\theta + \theta'\mu - \frac{\alpha}{2}\theta'\Sigma\theta.
+\]
+This is a strictly concave quadratic in $\theta$. The unique maximizer satisfies
+\[
+\alpha\Sigma\theta = \mu - p
+\quad\Rightarrow\quad
+\theta^* = \frac{1}{\alpha}\Sigma^{-1}(\mu - p).
+\]
+
+\section{Representative Agent Interpretation}
+If we aggregate to a representative agent with total risk tolerance $T$, the pricing kernel
+is proportional to $\exp(-\frac{1}{T}\bar{\theta}'X)$. This reproduces the same pricing
+equation:
+\[
+p = \E[X] - \frac{1}{T}\Cov(X, \bar{\theta}'X).
+\]
+This is the exact same object written as a covariance adjustment.
+
+\section{Worked Examples}
+\subsection*{Example 1: Single Asset}
+Suppose a single risky payoff has
+\[
+\mu = 1.08, \quad \sigma^2 = 0.04, \quad p = 1.02, \quad \alpha = 2.
+\]
+Then
+\[
+\theta^* = \frac{\mu - p}{\alpha\sigma^2} = \frac{0.06}{2 \cdot 0.04} = 0.75.
+\]
+
+\subsection*{Example 2: Two Assets, One Unit Supply}
 Let
 \[
 \mu = \begin{bmatrix}1.08 \\ 1.12\end{bmatrix}, \quad
@@ -144,22 +237,128 @@ Let
 \]
 Compute
 \[
-\Sigma\bar{\theta} = \begin{bmatrix}0.05 \\ 0.10\end{bmatrix}.
-\]
-Then
-\[
+\Sigma\bar{\theta} = \begin{bmatrix}0.05 \\ 0.10\end{bmatrix},
+\quad
  p = \mu - \frac{1}{2}\begin{bmatrix}0.05 \\ 0.10\end{bmatrix}
 = \begin{bmatrix}1.055 \\ 1.07\end{bmatrix}.
 \]
 
-\section*{8. Comparative Statics}
+\subsection*{Example 3: Heterogeneous Means}
+Suppose two agents share $\Sigma$ but have different beliefs $\mu_1$ and $\mu_2$.
+Then
+\[
+\sum_h \theta_h^* = \Sigma^{-1}\left(\sum_h \frac{\mu_h}{\alpha_h} - pT\right).
+\]
+Thus equilibrium prices depend on the risk-tolerance-weighted average of beliefs.
+
+\subsection*{Example 4: Risky Supply Tilt}
+Let
+\[
+\Sigma = \begin{bmatrix}0.09 & 0.02 \\\\ 0.02 & 0.04\end{bmatrix},
+\quad
+\bar{\theta} = \begin{bmatrix}2 \\\\ 0.5\end{bmatrix},
+\quad T = 2.
+\]
+Then
+\[
+\Sigma\bar{\theta} = \begin{bmatrix}0.20 \\\\ 0.08\end{bmatrix},
+\quad
+p = \mu - \frac{1}{2}\begin{bmatrix}0.20 \\\\ 0.08\end{bmatrix}.
+\]
+The high-supply asset receives a larger price discount.
+
+\section{Comparative Statics}
 \begin{itemize}[leftmargin=18pt]
 \item If $T$ doubles, risk premia halve.
 \item If $\Sigma$ increases (more risk), prices fall.
 \item If supply $\bar{\theta}$ rises, prices fall proportionally to risk exposure.
 \end{itemize}
 
-\section*{9. Exam Checklist}
+\section{Qualifier-Style Problem A (Full Walkthrough)}
+\textbf{Problem.} There are $N$ risky payoffs with $X \sim \mathcal{N}(\mu, \Sigma)$.
+Agents have CARA utility $U(c) = -\exp(-\alpha c)$. Supply is $\bar{\theta}$.
+Derive equilibrium prices and interpret the risk premium.
+
+\subsection*{Solution}
+Step 1. Write wealth as $c = w_0 - p'\theta + \theta'X$.
+
+Step 2. Use CARA-normal to get
+\[
+CE = \E[c] - \frac{\alpha}{2}\Var(c)
+= w_0 - p'\theta + \theta'\mu - \frac{\alpha}{2}\theta'\Sigma\theta.
+\]
+
+Step 3. Differentiate and solve:
+\[
+-p + \mu - \alpha\Sigma\theta = 0
+\quad\Rightarrow\quad
+\theta^* = \frac{1}{\alpha}\Sigma^{-1}(\mu - p).
+\]
+
+Step 4. Aggregate demands: $\sum_h \theta_h^* = T\Sigma^{-1}(\mu - p)$.
+
+Step 5. Market clearing $\sum_h \theta_h^* = \bar{\theta}$ yields
+\[
+p = \mu - \frac{1}{T}\Sigma\bar{\theta}.
+\]
+
+Step 6. Risk premium:
+\[
+\mu - p = \frac{1}{T}\Sigma\bar{\theta}.
+\]
+Interpretation: only covariance with aggregate exposure is priced, scaled by $1/T$.
+
+\section{Qualifier-Style Problem B (Heterogeneous Beliefs)}
+\textbf{Problem.} Two agents share the same covariance $\Sigma$ but have different
+means $\mu_1, \mu_2$ and risk aversions $\alpha_1, \alpha_2$.
+Find the equilibrium price.
+
+\subsection*{Solution}
+Each agent demands
+\[
+\theta_h^* = \frac{1}{\alpha_h}\Sigma^{-1}(\mu_h - p).
+\]
+Sum:
+\[
+\sum_h \theta_h^*
+= \Sigma^{-1}\left(\sum_h \frac{\mu_h}{\alpha_h} - p\sum_h \frac{1}{\alpha_h}\right).
+\]
+Define $T = \sum_h 1/\alpha_h$ and $\bar{\mu} = \frac{1}{T}\sum_h \mu_h/\alpha_h$.
+Then market clearing gives
+\[
+p = \bar{\mu} - \frac{1}{T}\Sigma\bar{\theta}.
+\]
+Thus prices are driven by the risk-tolerance-weighted average belief.
+
+\section{Matrix Identities (Quick Reference)}
+These appear repeatedly in qualifiers:
+\begin{itemize}[leftmargin=18pt]
+\item If $f(\theta) = a'\theta$, then $\nabla_\theta f = a$.
+\item If $f(\theta) = \tfrac{1}{2}\theta' A \theta$ with symmetric $A$, then
+      $\nabla_\theta f = A\theta$.
+\item If $A$ is invertible, then $A\theta = b \Rightarrow \theta = A^{-1}b$.
+\end{itemize}
+
+\section{Step-by-Step Blueprint (Exam Edition)}
+When time is tight, follow this exact structure:
+\begin{enumerate}[leftmargin=18pt]
+\item Write $c = w_0 - p'\theta + \theta'X$ and state $X \sim \mathcal{N}(\mu,\Sigma)$.
+\item Replace utility with $CE = \E[c] - \tfrac{\alpha}{2}\Var(c)$.
+\item Solve $-p + \mu - \alpha\Sigma\theta = 0$ for $\theta^*$.
+\item Aggregate and define $T = \sum_h 1/\alpha_h$.
+\item Clear the market and report $p = \mu - \Sigma\bar{\theta}/T$.
+\item Interpret the risk premium as covariance with aggregate exposure.
+\end{enumerate}
+
+\section{Common Pitfalls}
+\begin{itemize}[leftmargin=18pt]
+\item Forgetting that $p$ is a vector of prices, not returns.
+\item Dropping the matrix inverse in $\theta^* = \frac{1}{\alpha}\Sigma^{-1}(\mu - p)$.
+\item Confusing $T$ (risk tolerance) with average risk aversion.
+\item Skipping the aggregation step and writing the price formula by memory.
+\end{itemize}
+
+\section{Exam Checklist}
 Before exam day, you should be able to do the following without notes:
 \begin{enumerate}[leftmargin=18pt]
 \item Derive the certainty equivalent for CARA utility under normality.
@@ -168,12 +367,54 @@ Before exam day, you should be able to do the following without notes:
 \item Translate prices into expected excess payoffs and interpret risk premia.
 \end{enumerate}
 
-\section*{10. Practice Problems}
+\section{Practice Problems}
 \begin{enumerate}[leftmargin=18pt]
 \item Single asset: derive $\theta^*$ and solve for $p$ given $\bar{\theta} = 1$.
 \item Two agents: compute $T$ with $\alpha_1=1$ and $\alpha_2=2$ and solve for $p$.
 \item Comparative statics: show how $p$ changes when $\Sigma$ doubles.
+\item Prove the certainty equivalent formula directly by completing the square.
+\item Explain how the equilibrium price changes if agents face different $\mu$ but the same $\Sigma$.
+\item Suppose $\Sigma$ is diagonal. Interpret prices asset by asset.
+\item Derive the price formula using a representative agent and the pricing kernel.
+\item Show that if $\bar{\theta}=0$ then $p=\mu$ and explain the economic meaning.
 \end{enumerate}
+
+\section{Solutions}
+\subsection*{Solution 1}
+With one asset, the FOC gives $\theta^* = (\mu - p)/(\alpha\sigma^2)$.
+Market clearing $\theta^* = 1$ implies $p = \mu - \alpha\sigma^2$.
+
+\subsection*{Solution 2}
+Risk tolerance is $T = 1/1 + 1/2 = 1.5$.
+The equilibrium price is $p = \mu - \Sigma\bar{\theta}/T$.
+
+\subsection*{Solution 3}
+If $\Sigma$ doubles, then $\Sigma\bar{\theta}$ doubles, so $p$ falls by
+$\frac{1}{T}(\Sigma\bar{\theta})$.
+
+\subsection*{Solution 4}
+Write $c = m + sZ$ with $Z \sim \mathcal{N}(0,1)$. Then
+$\E[\exp(-\alpha c)] = \exp(-\alpha m + \tfrac{1}{2}\alpha^2 s^2)$.
+Thus the certainty equivalent is $m - \tfrac{\alpha}{2}s^2$.
+
+\subsection*{Solution 5}
+With heterogeneous $\mu_h$, each agent has demand
+$\theta_h^* = \frac{1}{\alpha_h}\Sigma^{-1}(\mu_h - p)$.
+Summing gives $\sum_h \theta_h^* = \Sigma^{-1}(\sum_h (\mu_h/\alpha_h) - pT)$.
+Thus the price depends on the risk-tolerance-weighted average of means.
+
+\subsection*{Solution 6}
+If $\Sigma$ is diagonal, then each asset is priced independently:
+$p_i = \mu_i - (\sigma_i^2 \bar{\theta}_i)/T$.
+
+\subsection*{Solution 7}
+With representative agent risk tolerance $T$, the pricing kernel is proportional to
+$\exp(-\frac{1}{T}\bar{\theta}'X)$. Then
+$p = \E[X] - \frac{1}{T}\Cov(X, \bar{\theta}'X)$, which matches the equilibrium price.
+
+\subsection*{Solution 8}
+If $\bar{\theta}=0$, the economy has no aggregate risk exposure. Then
+$p = \mu$. Prices equal expected payoffs because there is no risk to price.
 
 \section*{Instructor Note}
 I am an independent researcher and PhD (Georgia Institute of Technology), not currently affiliated
