@@ -8,7 +8,9 @@
   <link rel="stylesheet" href="../assets/styles.css">
   <script defer src="../assets/app.js"></script>
 </head>
-<body>
+<body data-mode="learn">
+  <div class="progress-track"><div class="progress-bar"></div></div>
+
   <header class="nav">
     <div class="container">
       <div class="brand">
@@ -17,9 +19,9 @@
       </div>
       <nav class="nav-links">
         <a href="index.html">Asset Pricing Track</a>
-        <a href="#overview">Overview</a>
-        <a href="#map">Concept Map</a>
-        <a href="#problems">Problem Walkthroughs</a>
+        <a href="#walkthrough">Live Walkthrough</a>
+        <a href="#problems">Problem Bank</a>
+        <a href="#deck">Slide Deck</a>
       </nav>
     </div>
   </header>
@@ -33,9 +35,13 @@
           We start with exponential utility and normal uncertainty, then build equilibrium step by step.
           Every line shows how preferences, risk, and market clearing translate into prices and premia.
         </p>
-        <div class="hero-actions">
-          <a class="button" href="#map">Open the Concept Map</a>
-          <a class="button secondary" href="#problems">Jump to Problems</a>
+        <div class="action-bar">
+          <div class="toggle-group" role="group" aria-label="Study mode">
+            <button class="toggle-button" data-mode-toggle="learn">Learn Mode</button>
+            <button class="toggle-button" data-mode-toggle="exam">Exam Mode</button>
+          </div>
+          <a class="button" href="AP_01_CARA_Normal_Equilibrium.pdf">Download slides (PDF)</a>
+          <a class="button secondary" href="FinanceNotes_AP1.pdf">Download notes (PDF)</a>
         </div>
       </div>
       <div class="hero-panel reveal" data-delay="140">
@@ -48,88 +54,177 @@
           <div class="signal-card">
             <div class="signal-title">Signature Move</div>
             <h3>Complete the square</h3>
-            <p>Normality lets us solve the expected utility in closed form.</p>
+            <p>Normality lets us solve expected utility in closed form.</p>
+          </div>
+          <div class="signal-card">
+            <div class="signal-title">Exam Anchor</div>
+            <h3>Price = mean - risk adjustment</h3>
+            <p>Show how aggregate risk tolerance shifts prices.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="map" class="section container">
-      <h2 class="reveal">Concept Map</h2>
+    <section id="walkthrough" class="section container">
+      <h2 class="reveal">Live Walkthrough</h2>
       <p class="section-intro reveal" data-delay="120">
-        The module is structured as a chain. Each step becomes a qualifier-style problem.
+        This is the heart of AP-01. Use Learn Mode for full commentary, Exam Mode for a clean outline.
       </p>
-      <div class="module-grid">
-        <article class="module-card reveal" data-delay="180">
-          <h3>CARA + Normal Setup</h3>
-          <ul>
-            <li>Utility, wealth, and normal payoffs</li>
-            <li>Certainty equivalent formula</li>
-            <li>Risk tolerance aggregation</li>
-          </ul>
-        </article>
-        <article class="module-card reveal" data-delay="240">
-          <h3>Demand and Market Clearing</h3>
-          <ul>
-            <li>First-order conditions in full</li>
-            <li>Aggregate demand and supply</li>
-            <li>Equilibrium price vector</li>
-          </ul>
-        </article>
-        <article class="module-card reveal" data-delay="300">
-          <h3>Risk Premia</h3>
-          <ul>
-            <li>Mean-variance pricing form</li>
-            <li>Covariance with aggregate risk</li>
-            <li>Interpretation of price of risk</li>
-          </ul>
-        </article>
+      <div class="stepper reveal" data-stepper data-delay="180">
+        <div class="stepper-panels">
+          <div class="stepper-panel" data-step="1">
+            <h4>1. Setup the economy</h4>
+            <p class="mode-detail">
+              Each agent has CARA utility: \(U(c) = -\exp(-\alpha c)\). The risky payoff vector \(X\)
+              is jointly normal with mean \(\mu\) and covariance \(\Sigma\).
+            </p>
+            <p class="mode-summary">State utility, distributional assumptions, and notation.</p>
+            <div class="math-block">\(X \sim \mathcal{N}(\mu, \Sigma)\)</div>
+          </div>
+          <div class="stepper-panel" data-step="2">
+            <h4>2. Solve expected utility</h4>
+            <p class="mode-detail">
+              With normality, expected utility reduces to a certainty equivalent. Completing the square yields
+              \(CE = \E[c] - \tfrac{\alpha}{2} \Var(c)\). This is the mean-variance bridge.
+            </p>
+            <p class="mode-summary">Write the certainty equivalent and identify the quadratic penalty.</p>
+            <div class="math-block">\(CE = \E[c] - \frac{\alpha}{2}\Var(c)\)</div>
+          </div>
+          <div class="stepper-panel" data-step="3">
+            <h4>3. Derive individual demand</h4>
+            <p class="mode-detail">
+              Let portfolio holdings be \(\theta\). With price vector \(p\), terminal wealth is
+              \(c = w_0 - p'\theta + \theta' X\). FOC gives
+              \(\theta^* = \frac{1}{\alpha}\Sigma^{-1}(\mu - p)\).
+            </p>
+            <p class="mode-summary">Compute FOC and solve for optimal holdings.</p>
+            <div class="math-block">\(\theta^* = \frac{1}{\alpha}\Sigma^{-1}(\mu - p)\)</div>
+          </div>
+          <div class="stepper-panel" data-step="4">
+            <h4>4. Market clearing</h4>
+            <p class="mode-detail">
+              Aggregate demand equals supply \(\bar{\theta}\). Summing across agents produces
+              \(\sum_h \theta_h^* = T\Sigma^{-1}(\mu - p)\), where \(T = \sum_h 1/\alpha_h\).
+            </p>
+            <p class="mode-summary">Sum demands and set equal to supply.</p>
+            <div class="math-block">\(p = \mu - \Sigma \bar{\theta}/T\)</div>
+          </div>
+          <div class="stepper-panel" data-step="5">
+            <h4>5. Risk premia</h4>
+            <p class="mode-detail">
+              Expected excess returns are proportional to covariance with aggregate endowment risk:
+              \(\E[X_i] - p_i = \frac{1}{T} \Cov(X_i, \bar{\theta}'X)\).
+            </p>
+            <p class="mode-summary">Write the pricing equation and interpret the risk term.</p>
+            <div class="math-block">\(\E[X] - p = \frac{1}{T}\Sigma \bar{\theta}\)</div>
+          </div>
+          <div class="stepper-panel" data-step="6">
+            <h4>6. Interpret the equilibrium</h4>
+            <p class="mode-detail">
+              Higher aggregate risk tolerance (large \(T\)) raises prices and lowers premia.
+              Higher risk exposure lowers prices. This is the economic lever that shows up on qualifiers.
+            </p>
+            <p class="mode-summary">Explain how \(T\) and risk change prices.</p>
+          </div>
+        </div>
+        <div class="stepper-controls">
+          <button type="button" data-stepper-action="prev">Back</button>
+          <button type="button" data-stepper-action="next">Next</button>
+          <span class="stepper-index" data-stepper-index></span>
+        </div>
       </div>
     </section>
 
     <section class="section container">
-      <h2 class="reveal">Deliverables in This Module</h2>
-      <div class="resource-grid">
-        <article class="resource-card reveal" data-delay="160">
-          <h4>Slide Deck</h4>
-          <p>Full AP-01 LaTeX slides with detailed derivations and worked examples.</p>
-          <p><a href="AP_01_CARA_Normal_Equilibrium.pdf">Download AP-01 slides (PDF)</a></p>
-        </article>
-        <article class="resource-card reveal" data-delay="210">
-          <h4>Problem Scripts</h4>
-          <p>Qualifier problems rewritten as step-by-step solution templates.</p>
-        </article>
-      </div>
-      <div class="callout reveal" data-delay="260">
-        <p>
-          Objective: be able to derive equilibrium prices in a CARA-normal economy under time pressure,
-          and interpret every term in the pricing equation.
-        </p>
+      <h2 class="reveal">Quick Calculator</h2>
+      <p class="section-intro reveal" data-delay="120">
+        Single-asset CARA demand. Use this to sanity-check computations during practice.
+      </p>
+      <div class="method-card reveal" data-delay="180" data-calc="cara">
+        <div class="calc-grid">
+          <label>Expected payoff \(\mu\)
+            <input type="number" name="mu" step="0.01" value="1.08">
+          </label>
+          <label>Price or risk-free value \(p\)
+            <input type="number" name="rf" step="0.01" value="1.02">
+          </label>
+          <label>Risk aversion \(\alpha\)
+            <input type="number" name="alpha" step="0.1" value="2">
+          </label>
+          <label>Variance \(\sigma^2\)
+            <input type="number" name="sigma2" step="0.01" value="0.04">
+          </label>
+        </div>
+        <div class="calc-output" data-calc-output></div>
       </div>
     </section>
 
     <section id="problems" class="section container">
       <h2 class="reveal">Problem Walkthroughs</h2>
       <p class="section-intro reveal" data-delay="120">
-        Each walkthrough starts with a real exam prompt, then builds the full derivation line-by-line.
+        Each problem mirrors a qualifier prompt. Expand to see the full logic and checkpoints.
       </p>
-      <div class="method-grid">
-        <div class="method-card reveal" data-delay="160">
-          <h4>Problem A: Solve Individual Demand</h4>
-          <p>Compute optimal holdings with CARA utility and normal payoffs.</p>
+      <div class="accordion reveal" data-delay="160">
+        <div class="accordion-item">
+          <button class="accordion-button" data-accordion-toggle aria-expanded="false">
+            Problem A: Solve individual demand <span>+</span>
+          </button>
+          <div class="accordion-panel">
+            <p>Write wealth as \(c = w_0 - p'\theta + \theta'X\). Use the CARA-normal CE to get
+              \(CE = w_0 - p'\theta + \theta'\mu - \tfrac{\alpha}{2}\theta'\Sigma\theta\).
+              Differentiate and solve for \(\theta^*\).</p>
+          </div>
         </div>
-        <div class="method-card reveal" data-delay="210">
-          <h4>Problem B: Market Clearing</h4>
-          <p>Aggregate demand, clear the market, and identify equilibrium prices.</p>
+        <div class="accordion-item">
+          <button class="accordion-button" data-accordion-toggle aria-expanded="false">
+            Problem B: Market clearing and prices <span>+</span>
+          </button>
+          <div class="accordion-panel">
+            <p>Aggregate \(\theta_h^*\) across agents. Define total risk tolerance
+              \(T = \sum_h 1/\alpha_h\). Set \(\sum_h \theta_h^* = \bar{\theta}\) and solve for
+              \(p = \mu - \Sigma \bar{\theta}/T\).</p>
+          </div>
         </div>
-        <div class="method-card reveal" data-delay="260">
-          <h4>Problem C: Risk Premia</h4>
-          <p>Translate equilibrium prices into expected excess returns and premia.</p>
+        <div class="accordion-item">
+          <button class="accordion-button" data-accordion-toggle aria-expanded="false">
+            Problem C: Risk premia <span>+</span>
+          </button>
+          <div class="accordion-panel">
+            <p>Compute \(\E[X] - p = \Sigma \bar{\theta}/T\). Interpret it as the price of risk times
+              covariance with aggregate exposure. Emphasize that only systematic risk is priced.</p>
+          </div>
         </div>
-        <div class="method-card reveal" data-delay="310">
-          <h4>Problem D: Comparative Statics</h4>
-          <p>Show how prices shift with risk tolerance, variance, and endowment risk.</p>
+        <div class="accordion-item">
+          <button class="accordion-button" data-accordion-toggle aria-expanded="false">
+            Problem D: Comparative statics <span>+</span>
+          </button>
+          <div class="accordion-panel">
+            <p>Show how prices rise with larger \(T\) and fall with higher \(\Sigma\). Ask how a more
+              risk-averse agent shifts equilibrium prices.</p>
+          </div>
         </div>
+      </div>
+    </section>
+
+    <section class="section container">
+      <h2 class="reveal">Drill Generator</h2>
+      <p class="section-intro reveal" data-delay="120">
+        Click to draw a fresh qualifier-style prompt. Use Exam Mode if you want zero hints.
+      </p>
+      <div class="method-card reveal" data-delay="180" data-drill-bank="ap01-drills">
+        <button class="button secondary" type="button" data-drill-button>New Drill</button>
+        <div class="drill-card" data-drill-output></div>
+      </div>
+    </section>
+
+    <section id="deck" class="section container">
+      <h2 class="reveal">Full Slide Deck</h2>
+      <p class="section-intro reveal" data-delay="120">
+        The live deck is embedded below. Download the PDF if you want to annotate offline.
+      </p>
+      <div class="viewer reveal" data-delay="180">
+        <iframe class="pdf-viewer" title="AP-01 slide deck" loading="lazy"
+          src="AP_01_CARA_Normal_Equilibrium.pdf#view=FitH"></iframe>
       </div>
     </section>
 
@@ -159,5 +254,32 @@
       </div>
     </footer>
   </main>
+
+  <script type="application/json" id="ap01-drills">
+    [
+      {
+        "title": "Drill 1: Derive individual demand",
+        "prompt": "CARA utility, normal payoff. Derive optimal holdings for N risky assets and interpret the risk penalty.",
+        "tags": ["demand", "FOC", "normal"]
+      },
+      {
+        "title": "Drill 2: Market clearing",
+        "prompt": "Aggregate the demands of two agents with different risk aversions and solve for equilibrium price.",
+        "tags": ["equilibrium", "aggregation"]
+      },
+      {
+        "title": "Drill 3: Price of risk",
+        "prompt": "Show how the price vector shifts when aggregate risk tolerance doubles.",
+        "tags": ["comparative statics", "risk premium"]
+      }
+    ]
+  </script>
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </body>
 </html>

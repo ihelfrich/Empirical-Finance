@@ -8,7 +8,9 @@
   <link rel="stylesheet" href="../assets/styles.css">
   <script defer src="../assets/app.js"></script>
 </head>
-<body>
+<body data-mode="learn">
+  <div class="progress-track"><div class="progress-bar"></div></div>
+
   <header class="nav">
     <div class="container">
       <div class="brand">
@@ -17,9 +19,9 @@
       </div>
       <nav class="nav-links">
         <a href="index.html">Asset Pricing Track</a>
-        <a href="#overview">Overview</a>
-        <a href="#map">Concept Map</a>
-        <a href="#problems">Problem Walkthroughs</a>
+        <a href="#walkthrough">Live Walkthrough</a>
+        <a href="#problems">Problem Bank</a>
+        <a href="#deck">Slide Deck</a>
       </nav>
     </div>
   </header>
@@ -30,13 +32,16 @@
         <span class="eyebrow">AP-02: CAPM + SDF Foundations</span>
         <h1>Build the CAPM Twice and See Why It Must Agree</h1>
         <p>
-          This module is built to make CAPM feel inevitable: first through mean-variance logic,
-          then through the stochastic discount factor. We do every derivation in full and pin
-          each step to its economic meaning.
+          This module makes CAPM feel inevitable: first through mean-variance logic,
+          then through the stochastic discount factor. We do every derivation in full and
+          pin each step to its economic meaning.
         </p>
-        <div class="hero-actions">
-          <a class="button" href="#map">Open the Concept Map</a>
-          <a class="button secondary" href="#problems">Jump to Problems</a>
+        <div class="action-bar">
+          <div class="toggle-group" role="group" aria-label="Study mode">
+            <button class="toggle-button" data-mode-toggle="learn">Learn Mode</button>
+            <button class="toggle-button" data-mode-toggle="exam">Exam Mode</button>
+          </div>
+          <a class="button" href="AP_02_CAPM_SDF_Foundations.pdf">Download slides (PDF)</a>
         </div>
       </div>
       <div class="hero-panel reveal" data-delay="140">
@@ -51,86 +56,159 @@
             <h3>E[m R_i] = 1</h3>
             <p>One pricing equation unifies equilibrium and no-arbitrage logic.</p>
           </div>
+          <div class="signal-card">
+            <div class="signal-title">Exam Anchor</div>
+            <h3>Covariance is the price</h3>
+            <p>Only covariance with the market is priced, not idiosyncratic noise.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="map" class="section container">
-      <h2 class="reveal">Concept Map</h2>
+    <section id="walkthrough" class="section container">
+      <h2 class="reveal">Live Walkthrough</h2>
       <p class="section-intro reveal" data-delay="120">
-        The module is structured as a narrative. Every node is paired with a qualifier-style problem.
+        Use Learn Mode for full narration and Exam Mode for a stripped outline.
       </p>
-      <div class="module-grid">
-        <article class="module-card reveal" data-delay="180">
-          <h3>Mean-Variance Engine</h3>
-          <ul>
-            <li>Portfolio return and variance decomposition</li>
-            <li>FOC and tangency portfolio</li>
-            <li>Market clearing and efficiency</li>
-          </ul>
-        </article>
-        <article class="module-card reveal" data-delay="240">
-          <h3>CAPM Derivation</h3>
-          <ul>
-            <li>Covariance identity: (Sigma w_M)_i</li>
-            <li>Beta pricing equation</li>
-            <li>Sharpe ratio interpretation</li>
-          </ul>
-        </article>
-        <article class="module-card reveal" data-delay="300">
-          <h3>SDF View</h3>
-          <ul>
-            <li>Pricing kernel definition</li>
-            <li>Linear SDF implies CAPM</li>
-            <li>Link to factor models</li>
-          </ul>
-        </article>
+      <div class="stepper reveal" data-stepper data-delay="180">
+        <div class="stepper-panels">
+          <div class="stepper-panel" data-step="1">
+            <h4>1. Mean-variance objective</h4>
+            <p class="mode-detail">Write \(\max_w \E[R_p] - \tfrac{\gamma}{2}\Var(R_p)\) with a risk-free asset.</p>
+            <p class="mode-summary">State objective and definitions.</p>
+            <div class="math-block">\(\E[R_p] = R_f + w'(\mu - R_f \mathbf{1})\)</div>
+          </div>
+          <div class="stepper-panel" data-step="2">
+            <h4>2. First-order condition</h4>
+            <p class="mode-detail">Differentiate: \(\mu - R_f \mathbf{1} - \gamma \Sigma w = 0\).</p>
+            <p class="mode-summary">Solve FOC for w.</p>
+            <div class="math-block">\(w \propto \Sigma^{-1}(\mu - R_f \mathbf{1})\)</div>
+          </div>
+          <div class="stepper-panel" data-step="3">
+            <h4>3. Market portfolio</h4>
+            <p class="mode-detail">Market clearing implies the market portfolio is the tangency portfolio.</p>
+            <p class="mode-summary">Argue efficiency of market portfolio.</p>
+            <div class="math-block">\(\Sigma w_M = \kappa(\mu - R_f \mathbf{1})\)</div>
+          </div>
+          <div class="stepper-panel" data-step="4">
+            <h4>4. Covariance identity</h4>
+            <p class="mode-detail">Use \((\Sigma w_M)_i = \Cov(R_i, R_M)\) to connect to beta.</p>
+            <p class="mode-summary">Translate matrix equation to covariance form.</p>
+          </div>
+          <div class="stepper-panel" data-step="5">
+            <h4>5. Solve for the slope</h4>
+            <p class="mode-detail">Apply the same equation to the market to identify \(\kappa\), then substitute.</p>
+            <p class="mode-summary">Solve for CAPM beta form.</p>
+          </div>
+          <div class="stepper-panel" data-step="6">
+            <h4>6. SDF bridge</h4>
+            <p class="mode-detail">Start from \(\E[m R_i] = 1\). Assume \(m = a - b R_M\).</p>
+            <p class="mode-summary">Write pricing equation and linear SDF.</p>
+            <div class="math-block">\(\E[R_i] - R_f = -\frac{\Cov(m, R_i)}{\E[m]}\)</div>
+          </div>
+          <div class="stepper-panel" data-step="7">
+            <h4>7. Recover CAPM</h4>
+            <p class="mode-detail">Substitute \(\Cov(m, R_i) = -b\Cov(R_M, R_i)\) and divide by the market case.</p>
+            <p class="mode-summary">Show the same CAPM equation falls out.</p>
+          </div>
+        </div>
+        <div class="stepper-controls">
+          <button type="button" data-stepper-action="prev">Back</button>
+          <button type="button" data-stepper-action="next">Next</button>
+          <span class="stepper-index" data-stepper-index></span>
+        </div>
       </div>
     </section>
 
     <section class="section container">
-      <h2 class="reveal">Deliverables in This Module</h2>
-      <div class="resource-grid">
-        <article class="resource-card reveal" data-delay="160">
-          <h4>Slide Deck</h4>
-          <p>Full AP-02 LaTeX slides with step-by-step derivations and examples.</p>
-          <p><a href="AP_02_CAPM_SDF_Foundations.pdf">Download AP-02 slides (PDF)</a></p>
-        </article>
-        <article class="resource-card reveal" data-delay="210">
-          <h4>Problem Scripts</h4>
-          <p>Qualifier problems written as solution templates and drill sheets.</p>
-        </article>
-      </div>
-      <div class="callout reveal" data-delay="260">
-        <p>
-          Objective: be able to derive the CAPM under time pressure, explain each assumption,
-          and translate it to the SDF language without hesitation.
-        </p>
+      <h2 class="reveal">CAPM Calculator</h2>
+      <p class="section-intro reveal" data-delay="120">
+        Use this to sanity-check betas and implied expected returns on the fly.
+      </p>
+      <div class="method-card reveal" data-delay="180" data-calc="capm">
+        <div class="calc-grid">
+          <label>Risk-free \(R_f\)
+            <input type="number" name="rf" step="0.001" value="1.02">
+          </label>
+          <label>Market mean \(\E[R_M]\)
+            <input type="number" name="muM" step="0.001" value="1.10">
+          </label>
+          <label>Market variance \(\Var(R_M)\)
+            <input type="number" name="varM" step="0.001" value="0.04">
+          </label>
+          <label>Covariance \(\Cov(R_i,R_M)\)
+            <input type="number" name="cov" step="0.001" value="0.06">
+          </label>
+        </div>
+        <div class="calc-output" data-calc-output></div>
       </div>
     </section>
 
     <section id="problems" class="section container">
       <h2 class="reveal">Problem Walkthroughs</h2>
       <p class="section-intro reveal" data-delay="120">
-        The walkthroughs are built exactly like the exam: setup, derivation, check, interpret.
+        Expand to see the full qualifier logic, from setup to interpretation.
       </p>
-      <div class="method-grid">
-        <div class="method-card reveal" data-delay="160">
-          <h4>Problem A: Full CAPM Derivation</h4>
-          <p>Mean-variance optimization, tangency portfolio, market clearing, and beta pricing.</p>
+      <div class="accordion reveal" data-delay="160">
+        <div class="accordion-item">
+          <button class="accordion-button" data-accordion-toggle aria-expanded="false">
+            Problem A: Full CAPM derivation <span>+</span>
+          </button>
+          <div class="accordion-panel">
+            <p>Write the mean-variance objective, solve the FOC, identify the tangency portfolio,
+              and use market clearing to get \(\Sigma w_M = \kappa(\mu - R_f \mathbf{1})\).
+              Convert to covariance form and solve for \(\kappa\).</p>
+          </div>
         </div>
-        <div class="method-card reveal" data-delay="210">
-          <h4>Problem B: CAPM from SDF</h4>
-          <p>Use E[mR]=1 and a linear SDF to re-derive the CAPM cleanly.</p>
+        <div class="accordion-item">
+          <button class="accordion-button" data-accordion-toggle aria-expanded="false">
+            Problem B: CAPM from an SDF <span>+</span>
+          </button>
+          <div class="accordion-panel">
+            <p>Start from \(\E[mR_i]=1\). Use covariance decomposition to isolate \(\E[R_i]-R_f\),
+              substitute a linear SDF, and divide by the market equation to recover CAPM.</p>
+          </div>
         </div>
-        <div class="method-card reveal" data-delay="260">
-          <h4>Problem C: Zero-Beta CAPM</h4>
-          <p>No risk-free asset? Build the zero-beta version and interpret the intercept.</p>
+        <div class="accordion-item">
+          <button class="accordion-button" data-accordion-toggle aria-expanded="false">
+            Problem C: Zero-beta CAPM <span>+</span>
+          </button>
+          <div class="accordion-panel">
+            <p>No risk-free asset? Derive \(\E[R_i] = \E[R_Z] + \beta_i^Z(\E[R_M]-\E[R_Z])\),
+              then interpret \(R_Z\) as the return on the minimum variance portfolio orthogonal to the market.</p>
+          </div>
         </div>
-        <div class="method-card reveal" data-delay="310">
-          <h4>Problem D: Factor Model Nesting</h4>
-          <p>Show how CAPM sits inside multi-factor models and what that means for tests.</p>
+        <div class="accordion-item">
+          <button class="accordion-button" data-accordion-toggle aria-expanded="false">
+            Problem D: Factor model nesting <span>+</span>
+          </button>
+          <div class="accordion-panel">
+            <p>Show how the CAPM is the one-factor case of \(\E[R_i] = R_f + \beta_i'\lambda\).
+              Explain what it means to test the CAPM inside a multi-factor model.</p>
+          </div>
         </div>
+      </div>
+    </section>
+
+    <section class="section container">
+      <h2 class="reveal">Drill Generator</h2>
+      <p class="section-intro reveal" data-delay="120">
+        Draw a fresh qualifier prompt on demand. Ideal for rapid rehearsal.
+      </p>
+      <div class="method-card reveal" data-delay="180" data-drill-bank="ap02-drills">
+        <button class="button secondary" type="button" data-drill-button>New Drill</button>
+        <div class="drill-card" data-drill-output></div>
+      </div>
+    </section>
+
+    <section id="deck" class="section container">
+      <h2 class="reveal">Full Slide Deck</h2>
+      <p class="section-intro reveal" data-delay="120">
+        The live deck is embedded below. Download the PDF if you want to annotate offline.
+      </p>
+      <div class="viewer reveal" data-delay="180">
+        <iframe class="pdf-viewer" title="AP-02 slide deck" loading="lazy"
+          src="AP_02_CAPM_SDF_Foundations.pdf#view=FitH"></iframe>
       </div>
     </section>
 
@@ -160,5 +238,32 @@
       </div>
     </footer>
   </main>
+
+  <script type="application/json" id="ap02-drills">
+    [
+      {
+        "title": "Drill 1: Beta from covariance",
+        "prompt": "Given Var(R_M) and Cov(R_i,R_M), compute beta and expected return.",
+        "tags": ["beta", "covariance", "CAPM"]
+      },
+      {
+        "title": "Drill 2: Derive CAPM from mean-variance",
+        "prompt": "Write the FOC, link the market portfolio, and identify the slope using the market itself.",
+        "tags": ["mean-variance", "market clearing"]
+      },
+      {
+        "title": "Drill 3: SDF derivation",
+        "prompt": "Assume m = a - b R_M. Use E[mR]=1 to recover the CAPM in two lines.",
+        "tags": ["SDF", "no-arbitrage"]
+      }
+    ]
+  </script>
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </body>
 </html>
